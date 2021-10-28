@@ -37,14 +37,11 @@
                 Various effect options for transitions: blind, bounce, clip, drop, explode, fade,
                 fold, highlight, puff, pulsate, scale, shake, size, slide, and transfer.
                 -->
-                <p:galleria value="#{sliderController.listOfSliderImageFilenames}"
-                            var="imageFilename" effect="fade" effectSpeed="1000" showFilmstrip="true"
-                            panelWidth="500" panelHeight="330" showCaption="true">
-                    <p:graphicImage value="/resources/images/slider/#{imageFilename}"
-                                    alt="#{sliderController.description(imageFilename)}" title="" />
+
+                <p:galleria id="custom" widgetVar="galleria3" value="#{sliderController.listOfSliderImageFilenames}" var="imageFilename"
+                            circular="true" fullScreen="true" numVisible="7" responsiveOptions="#{galleriaView.responsiveOptions1}"  showItemNavigators="false" showThumbnails="false" style="max-width: 850px">
+                    <p:graphicImage  value="/resources/slider/#{imageFilename}" alt="#{imageFilename}" style="width: 100%; display: block" />
                 </p:galleria>
-                <br/><br/>
-                <h1>We sell pre-owned Cars!</h1>
             </div>
         </ui:define>
     </ui:composition>
