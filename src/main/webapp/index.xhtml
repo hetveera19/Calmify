@@ -39,8 +39,8 @@
                 -->
 
                 <p:galleria id="custom" widgetVar="galleria3" value="#{sliderController.listOfSliderImageFilenames}" var="imageFilename"
-                            circular="true" fullScreen="true" numVisible="7" responsiveOptions="#{galleriaView.responsiveOptions1}"  showItemNavigators="false" showThumbnails="false" style="max-width: 850px">
-                    <p:graphicImage  value="/resources/slider/#{imageFilename}" alt="#{imageFilename}" style="width: 100%; display: block" />
+                            circular="true"  effect="fade" effectSpeed="1000" panelWidth="500" panelHeight="330" showFilmstrip="true" showItemNavigators="false" showThumbnails="false" style="max-width: 850px">
+                    <p:graphicImage  value="/resources/slider/#{imageFilename}" height="330" alt="#{imageFilename}" style="width: 100%; display: block" />
                 </p:galleria>
             </div>
         </ui:define>

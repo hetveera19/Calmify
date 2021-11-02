@@ -4,7 +4,10 @@
 *****************************************************/
 
 html, body {
-    background-color: linen;
+    background: #2980B9;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFFFFF, #6DD5FA, #2980B9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     margin: 0 0 0 0;    /* top right bottom left */
     width: 100%;        /* Set page width horizontally 100% */
     height: 100%;       /* Set page height vertically 100% */
@@ -51,7 +54,7 @@ Style the div component whose unique id is "header"
 <div id="header"> in siteTemplate
 */
 #header {
-    background-color: azure;
+    background-color: pink;
     width: 100%;
     height: 84px;
     position: absolute;
@@ -127,12 +130,9 @@ a:active {
 
 /* Used in headerTemplate */
 .headerTitle {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 18pt;
-    font-style: italic;
-    font-weight: normal;
-    text-decoration: none;
-    color: mediumblue;
+    font-family: "Dancing Script", cursive;
+    font-size: 40px;
+    color: white;
 }
 
 /*
