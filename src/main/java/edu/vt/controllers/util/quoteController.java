@@ -36,7 +36,7 @@ public class quoteController implements Serializable{
             // Create a new JSON array from the returned file
             //JSONArray searchResultsJson = new JSONArray(searchResultsJsonData);
             JSONObject searchResultsJson = new JSONObject(searchResultsJsonData);
-
+            System.out.println(searchResultsJson.toString());
             String a = (String) searchResultsJson.get("a");
             String q = (String) searchResultsJson.get("q");
             return q+"by"+a;
