@@ -28,18 +28,19 @@ public class quoteController implements Serializable{
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
         try {
-            String quoteJson = "https://zenquotes.io/api/random/[your_key]";
+            String quoteJson = "https://zenquotes.io/api/today";
 
             // Obtain the JSON file (String of characters) containing the search results
             // The readUrlContent() method is given below
             String searchResultsJsonData = readUrlContent(quoteJson);
             // Create a new JSON array from the returned file
-            //JSONArray searchResultsJson = new JSONArray(searchResultsJsonData);
-            JSONObject searchResultsJson = new JSONObject(searchResultsJsonData);
 
-            String a = (String) searchResultsJson.get("a");
-            String q = (String) searchResultsJson.get("q");
-            return q+"by"+a;
+            JSONArray searchResultsJson = new JSONArray(searchResultsJsonData);
+            JSONObject jsonObject = searchResultsJson.getJSONObject(0);
+            String a = (String) jsonObject.get("a");
+            String q = (String) jsonObject.get("q");
+
+            return q+"-"+a;
         } catch (Exception ex) {
             Methods.showMessage("Information", "No Results!", "No recipe found for the search query!");
         }

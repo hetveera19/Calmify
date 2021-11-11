@@ -106,6 +106,7 @@ a {
     font-size: 10pt;
 }
 
+
 a:link {
     text-decoration: none; /* Do not underline the link in normal state */
 }
@@ -202,4 +203,32 @@ Scale the image downward, but do not enlarge it beyond its actual width size.
 .ui-datatable-data td {
     padding-top: 3px !important;
     padding-bottom: 3px !important;
+}
+/*for quotes*/
+blockquote{
+    font-size: 1.4em;
+    width:60%;
+    margin:50px auto;
+    font-family:Open Sans;
+    font-style:italic;
+    color: #555555;
+    padding:1.2em 30px 1.2em 75px;
+    border-left:8px solid #A486B8 ;
+    line-height:1.6;
+    position: relative;
+    background:#EDEDED;
+}
+
+blockquote::before{
+    font-family:Arial;
+    content: "\201C";
+    color:#A486B8;
+    font-size:4em;
+    position: absolute;
+    left: 10px;
+    top:-10px;
+}
+
+blockquote::after{
+    content: '';
 }
