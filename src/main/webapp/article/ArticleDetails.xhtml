@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Anubhav Nanda on 2021.10.29
+  - Copyright © 2021 Anubhav Nanda. All rights reserved.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:composition>
+
+    <!--
+    ==========================================================
+    |  Clicking the INFO button displays this Dialog window  |
+    |  to show the Details of the Selected Searched Recipe.  |
+    ==========================================================
+    -->
+    <p:dialog id="articleDetailsDialog" header="Searched Recipe Details" widgetVar="articleDetailsDialog"
+              modal="true" width="60%" position="center" appendTo="@(body)"
+              showEffect="slide" hideEffect="explode" responsive="true" >
+        <!--
+        There are various effect options to be used when displaying and closing the dialog.
+        Use showEffect and hideEffect options to apply these effects:
+            blind, bounce, clip, drop, explode, fade, fold, highlight, puff,
+            pulsate, scale, shake, size, slide and transfer. [PrimeFaces user Guide]
+        -->
+        <p:scrollPanel mode="native" style="height: 800px;">
+        <h:form id="articleDetailsForm" class="ui-datatable-data">
+                <h:panelGroup>
+                    <!-- CLOSE button -->
+                    <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
+                                     onclick="PF('articleDetailsDialog').hide()" />
+                </h:panelGroup>
+
+                <div align="center">
+
+                    <h:panelGroup id="display">
+                        <!-- Display the selected recipe's photo -->
+                        <h:outputText value="#{articleController.selected.title}" style="color: maroon"/>
+                        <br /><br />
+                        <h:outputText value="Recipe Publisher Name"/>
+                        <br/>
+                        <h:outputText value="#{articleController.selected.content}" escape="false"/>
+                        <br/>
+                    </h:panelGroup>
+                    <h:form id="commentForm" class="ui-datatable-data">
+                        <p:outputLabel value="Comment:" for="content" />
+                        <p:textEditor widgetVar="editor1" id = "content" value="#{commentController.selected.content}"
+                                      height="50"  required="true" requiredMessage="Content is required!" secure="false"/>
+
+                        <p:commandButton value="Post" icon="fas fa-save" styleClass="rounded-button"
+                                         ajax="false" actionListener="#{commentController.create(articleController.selected)}"
+                                         update="display,:ArticleListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                        />
+                        &nbsp;
+                    </h:form>
+                </div>
+        </h:form>
+
+        <h:form id="CommentListForm">
+            <p:panel rendered="#{articleController.selected != null}">
+                <p:dataList value="#{commentController.getListOfArticleComments(articleController.selected)}"
+                            var="aComment"
+                            layout="list"
+                            rows="6"
+                            paginator="true"
+                            rowsPerPageTemplate="3,6,9,12,15,18,21,24"
+                            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            pageLinks="5"
+                            style="width:100%">
+                    <!-- The p:panel defines a data grid cell displaying aSearchedRecipe data -->
+                    <p:panel style="text-align:left" >
+
+                        <h:panelGrid columns="3" style="width:100%"
+                                     columnClasses="columnRecipe, columnMiddlePart, columnInfoButton">
+                            <!--<p:graphicImage url="#{aArticle.}" width="92px" style="float:left" />-->
+
+                            <h:panelGrid style="width:100%; margin-left:10px">
+                                <!-- Recipe name -->
+                                <h:outputText value="#{aComment.content}" escape="false"/>
+
+                            </h:panelGrid>
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                </p:dataList>
+            </p:panel>
+        </h:form>
+        </p:scrollPanel>
+    </p:dialog>
+</ui:composition>
+</html>
