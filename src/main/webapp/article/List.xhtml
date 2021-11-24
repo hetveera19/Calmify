@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Anubhav Nanda on 2021.10.29
+  - Copyright © 2021 Anubhav Nanda. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Blogs" />
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <!-- In case of JSF validation error, set 'selected' to null in recipeController -->
+            <c:if test="#{facesContext.validationFailed}">
+                ${articleController.unselect()}
+            </c:if>
+
+            <!-- Set 'selected' to null in recipeController when the user refreshes / reloads this JSF page -->
+            <f:metadata>
+                <f:viewAction action="#{articleController.unselect()}" rendered="#{facesContext.postback}" />
+            </f:metadata>
+
+            <div class="card">
+                <h:form id="ArticleListForm">
+                    <p:repeat value="#{articleController.listOfArticles}" var="aArticle">
+                        <div class="product">
+                            <div class="product-list-item border-1 p-p-5">
+                                <p:graphicImage name="demo/images/product/#{aArticle.title}"/>
+                                <div class="product-list-detail">
+                                    <div class="product-name">#{aArticle.title}</div>
+                                    <div class="product-description">#{aArticle.summary}</div>
+                                </div>
+                                <div class="product-list-action">
+                                    <p:commandLink update=":articleDetailsForm,:CommentListForm" style="width:20px;float:right;"
+                                                   oncomplete="PF('articleDetailsDialog').show()"
+                                                   action="#{commentController.prepareCreate}"
+                                                   title="View Searched Recipe Details">
+
+                                        <!-- Display the Info Icon -->
+                                        <i class="pi pi-link" title="View"/>
+                                        <!--
+                                        When the Info Icon is clicked on (selected), the apiSearchController.selected method
+                                        is invoked to set the selected current recipe object to the aSearchedRecipe object.
+                                        -->
+                                        <f:setPropertyActionListener target="#{articleController.selected}" value="#{aArticle}" />
+                                    </p:commandLink>
+                                </div>
+                            </div>
+                        </div>
+                    </p:repeat>
+                </h:form>
+            </div>
+
+            <!-- 
+            Clicking the Create button displays the included 
+            Create.xhtml file in a dialog window on top of this page.
+            -->
+
+            <ui:include src="/article/ArticleDetails.xhtml"/>
+
+            <!--
+            Clicking the View button displays the included
+            View.xhtml file in a dialog window on top of this page.
+
+            <ui:include src="/recipe/View.xhtml"/>
+
+            Clicking the Edit button displays the included
+            Edit.xhtml file in a dialog window on top of this page.
+            <ui:include src="/recipe/Edit.xhtml"/>
+            -->
+
+        </ui:define>
+    </ui:composition>
+</html>
