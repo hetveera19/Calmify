@@ -4,9 +4,9 @@
  */
 package edu.vt.controllers;
 
-import edu.vt.EntityBeans.Article;
+import edu.vt.EntityBeans.Blog;
 import edu.vt.EntityBeans.Comment;
-import edu.vt.FacadeBeans.ArticleFacade;
+import edu.vt.EntityBeans.User;
 import edu.vt.FacadeBeans.CommentFacade;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
@@ -15,10 +15,12 @@ import edu.vt.globals.Methods;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,7 +70,7 @@ public class CommentController implements Serializable {
     private CommentFacade commentFacade;
 
     // List of object references of Recipe objects
-    private List<Comment> listOfArticleComments = null;
+    private List<Comment> listOfBlogComments = null;
 
     // selected = object reference of a selected Recipe object
     private Comment selected;
@@ -76,13 +78,13 @@ public class CommentController implements Serializable {
     // Flag indicating if recipe data changed or not
     private Boolean commentDataChanged;
 
-    public List<Comment> getListOfArticleComments(Article article) {
-        System.out.println(article.getId());
-        listOfArticleComments = null;
-        if (listOfArticleComments == null && article.getId() != null) {
-            listOfArticleComments = commentFacade.findCommentsByArticlePrimaryKey(article.getId());
+    public List<Comment> getListOfBlogComments(Blog blog) {
+        System.out.println(blog.getId());
+        listOfBlogComments = null;
+        if (listOfBlogComments == null && blog.getId() != null) {
+            listOfBlogComments = commentFacade.findCommentsByBlogPrimaryKey(blog.getId());
         }
-        return listOfArticleComments;
+        return listOfBlogComments;
     }
 
     public Comment getSelected() {
@@ -124,7 +126,7 @@ public class CommentController implements Serializable {
     public String cancel() {
         // Unselect previously selected recipe object if any
         selected = null;
-        return "/article/List?faces-redirect=true";
+        return "/blog/List?faces-redirect=true";
     }
 
     /*
@@ -147,17 +149,27 @@ public class CommentController implements Serializable {
      *   CREATE a New Recipe in the Database       *
      ********************************************
      */
-    public void create(Article article) {
+    public void create(Blog blog) {
         Methods.preserveMessages();
 
+        /*
+        'user', the object reference of the signed-in user, was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+        */
+
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        User signedInUser = (User) sessionMap.get("user");
+
         selected.setPublicationDate(new Date());
-        selected.setArticleId(article.getId());
-        persist(PersistAction.CREATE,"Recipe was Successfully Created!");
+        selected.setBlog(blog);
+        selected.setUser(signedInUser);
+
+        persist(PersistAction.CREATE,"Comment Successfully Posted!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The CREATE operation is successfully performed.
             selected = null;        // Remove selection
-            listOfArticleComments = null;      // Invalidate listOfRecipes to trigger re-query.
+            listOfBlogComments = null;      // Invalidate listOfRecipes to trigger re-query.
         }
     }
 
@@ -174,7 +186,7 @@ public class CommentController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The UPDATE operation is successfully performed.
             selected = null;        // Remove selection
-            listOfArticleComments = null;     // Invalidate listOfRecipes to trigger re-query.
+            listOfBlogComments = null;     // Invalidate listOfRecipes to trigger re-query.
         }
     }
 
@@ -191,7 +203,7 @@ public class CommentController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The DELETE operation is successfully performed.
             selected = null;        // Remove selection
-            listOfArticleComments = null;     // Invalidate listOfRecipes to trigger re-query.
+            listOfBlogComments = null;     // Invalidate listOfRecipes to trigger re-query.
         }
     }
 

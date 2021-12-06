@@ -4,6 +4,8 @@
  */
 package edu.vt.FacadeBeans;
 
+import edu.vt.EntityBeans.Blog;
+
 import javax.persistence.EntityManager;
 import java.util.List;
 

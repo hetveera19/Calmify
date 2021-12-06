@@ -20,7 +20,7 @@
     |  to show the Details of the Selected Searched Recipe.  |
     ==========================================================
     -->
-    <p:dialog id="articleDetailsDialog" header="Searched Recipe Details" widgetVar="articleDetailsDialog"
+    <p:dialog id="blogDetailsDialog" header="View Blog" widgetVar="blogDetailsDialog"
               modal="true" width="60%" position="center" appendTo="@(body)"
               showEffect="slide" hideEffect="explode" responsive="true" >
         <!--
@@ -30,32 +30,32 @@
             pulsate, scale, shake, size, slide and transfer. [PrimeFaces user Guide]
         -->
         <p:scrollPanel mode="native" style="height: 800px;">
-        <h:form id="articleDetailsForm" class="ui-datatable-data">
+        <h:form id="blogDetailsForm" class="ui-datatable-data">
                 <h:panelGroup>
                     <!-- CLOSE button -->
                     <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
-                                     onclick="PF('articleDetailsDialog').hide()" />
+                                     onclick="PF('blogDetailsDialog').hide()" />
                 </h:panelGroup>
 
                 <div align="center">
 
                     <h:panelGroup id="display">
                         <!-- Display the selected recipe's photo -->
-                        <h:outputText value="#{articleController.selected.title}" style="color: maroon"/>
+                        <h:outputText value="#{blogController.selected.title}" style="color: maroon"/>
                         <br /><br />
-                        <h:outputText value="Recipe Publisher Name"/>
-                        <br/>
-                        <h:outputText value="#{articleController.selected.content}" escape="false"/>
+                        <h:outputText value="#{blogController.selected.content}" escape="false"/>
                         <br/>
                     </h:panelGroup>
                     <h:form id="commentForm" class="ui-datatable-data">
+                        <p:rating value="#{commentController.selected.rating}"/>
+
                         <p:outputLabel value="Comment:" for="content" />
                         <p:textEditor widgetVar="editor1" id = "content" value="#{commentController.selected.content}"
                                       height="50"  required="true" requiredMessage="Content is required!" secure="false"/>
 
                         <p:commandButton value="Post" icon="fas fa-save" styleClass="rounded-button"
-                                         ajax="false" actionListener="#{commentController.create(articleController.selected)}"
-                                         update="display,:ArticleListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                         ajax="false" actionListener="#{commentController.create(blogController.selected)}"
+                                         update="display,:blogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                         />
                         &nbsp;
                     </h:form>
@@ -63,8 +63,8 @@
         </h:form>
 
         <h:form id="CommentListForm">
-            <p:panel rendered="#{articleController.selected != null}">
-                <p:dataList value="#{commentController.getListOfArticleComments(articleController.selected)}"
+            <p:panel rendered="#{blogController.selected != null}">
+                <p:dataList value="#{commentController.getListOfBlogComments(blogController.selected)}"
                             var="aComment"
                             layout="list"
                             rows="6"

@@ -23,51 +23,56 @@
 
             <!-- In case of JSF validation error, set 'selected' to null in recipeController -->
             <c:if test="#{facesContext.validationFailed}">
-                ${articleController.unselect()}
+                ${blogController.unselect()}
             </c:if>
 
             <!-- Set 'selected' to null in recipeController when the user refreshes / reloads this JSF page -->
             <f:metadata>
-                <f:viewAction action="#{articleController.unselect()}" rendered="#{facesContext.postback}" />
+                <f:viewAction action="#{blogController.unselect()}" rendered="#{facesContext.postback}" />
             </f:metadata>
 
-            <div class="card">
-                <h:form id="ArticleListForm">
-                    <p:repeat value="#{articleController.listOfArticles}" var="aArticle">
-                        <div class="product">
-                            <div class="product-list-item border-1 p-p-5">
-                                <p:graphicImage name="demo/images/product/#{aArticle.title}"/>
-                                <div class="product-list-detail">
-                                    <div class="product-name">#{aArticle.title}</div>
-                                    <div class="product-description">#{aArticle.summary}</div>
-                                </div>
-                                <div class="product-list-action">
-                                    <p:commandLink update=":articleDetailsForm,:CommentListForm" style="width:20px;float:right;"
-                                                   oncomplete="PF('articleDetailsDialog').show()"
-                                                   action="#{commentController.prepareCreate}"
-                                                   title="View Searched Recipe Details">
 
-                                        <!-- Display the Info Icon -->
-                                        <i class="pi pi-link" title="View"/>
+            <div align="center">
+                <p:card>
+                    <h:form id="blogListForm">
+                        <p:dataScroller value="#{blogController.listOfPublishedBlogs}" id = "blogList" widgetVar="blogListTable" var="aBlog" chunkSize="10">
+                            <p:panel style="text-align:left" >
+
+                                <h:panelGrid columns="3" style="width:100%"
+                                         columnClasses="columnBlogImage, columnMiddlePart, columnViewButton">
+                                    <p:graphicImage value="#{blogController.blogPhoto(aBlog.id, aBlog.extension)}" width="92px" style="float:left" />
+                                    <h:panelGrid style="width:100%; margin-left:10px">
+                                    <!-- Recipe name -->
+                                        <h:outputText value="#{aBlog.title}"/>
+                                        <h:outputText value="#{aBlog.summary}" style="float:left;" />
+                                        <p:rating readonly="true" value="#{blogController.getBlogRating(aBlog.id)}" rendered="#{blogController.getBlogRating(aBlog.id) != 0}"/>
+                                    </h:panelGrid>
+
+                                    <p:commandLink value="Read More" styleClass="button" update=":blogDetailsForm,:CommentListForm"
+                                           oncomplete="PF('blogDetailsDialog').show()"
+                                           action="#{commentController.prepareCreate}"
+                                           title="Read More">
+
                                         <!--
                                         When the Info Icon is clicked on (selected), the apiSearchController.selected method
                                         is invoked to set the selected current recipe object to the aSearchedRecipe object.
                                         -->
-                                        <f:setPropertyActionListener target="#{articleController.selected}" value="#{aArticle}" />
+                                        <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
                                     </p:commandLink>
-                                </div>
-                            </div>
-                        </div>
-                    </p:repeat>
-                </h:form>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataScroller>
+                    </h:form>
+                </p:card>
             </div>
 
-            <!-- 
+
+            <!--
             Clicking the Create button displays the included 
             Create.xhtml file in a dialog window on top of this page.
             -->
 
-            <ui:include src="/article/ArticleDetails.xhtml"/>
+            <ui:include src="/blog/BlogDetails.xhtml"/>
 
             <!--
             Clicking the View button displays the included

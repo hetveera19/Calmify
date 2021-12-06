@@ -40,17 +40,40 @@ public class CommentFacade extends AbstractFacade<Comment> {
         super(Comment.class);
     }
 
-    public List<Comment> findCommentsByArticlePrimaryKey(Integer primaryKey) {
+    public List<Comment> findCommentsByBlogPrimaryKey(Integer primaryKey) {
         /*
         The following @NamedQuery definition is given in UserFile entity class file:
         @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
 
         The following statement obtains the results from the named database query.
          */
-        return entityManager.createNamedQuery("Comment.findCommentsByArticleId")
-                .setParameter("articleId", primaryKey)
+        return entityManager.createNamedQuery("Comment.findCommentsByBlogId")
+                .setParameter("blogId", primaryKey)
                 .getResultList();
     }
 
+    public double findRatingByBlogPrimaryKey(Integer primaryKey) {
+        /*
+        The following @NamedQuery definition is given in UserFile entity class file:
+        @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
+
+        The following statement obtains the results from the named database query.
+         */
+        return (double) entityManager.createNamedQuery("Comment.findRatingByBlogId")
+                .setParameter("blogId", primaryKey)
+                .getSingleResult();
+    }
+
+    public long findRatingCountByBlogPrimaryKey(Integer primaryKey) {
+        /*
+        The following @NamedQuery definition is given in UserFile entity class file:
+        @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
+
+        The following statement obtains the results from the named database query.
+         */
+        return (long) entityManager.createNamedQuery("Comment.findRatingCountByBlogId")
+                .setParameter("blogId", primaryKey)
+                .getSingleResult();
+    }
 
 }

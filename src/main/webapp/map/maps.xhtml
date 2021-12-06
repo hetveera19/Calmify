@@ -22,9 +22,9 @@
     <ui:define name="editableContent">
         <iframe
                 width="100%"
-                height="800px"
+                height="400px"
                 frameborder="0" style="border:0;"
-                src="https://www.google.com/maps/embed/v1/search?key=AIzaSyDFru9SVhCqkL9rwLv-PHtgPHwLcVQ8JEg&amp;q=mental+health,Blacksburg+Virginia;">
+                src="#{userController.userLocation}">
         </iframe>
     </ui:define>
 </ui:composition>

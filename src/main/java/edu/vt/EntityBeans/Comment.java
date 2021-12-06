@@ -1,10 +1,13 @@
 package edu.vt.EntityBeans;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-@Table(name = "comment")
-@Entity
+@Table(name = "comment", indexes = {
+        @Index(name = "blog_id", columnList = "blog_id"),
+        @Index(name = "user_id", columnList = "user_id")
+})
 
 @NamedQueries({
     /*
@@ -12,17 +15,22 @@ import java.util.Date;
     userId.id               --> User object's database primary key
      */
         @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c")
-        , @NamedQuery(name = "Comment.findCommentsByArticleId", query = "SELECT c FROM Comment c WHERE c.articleId = :articleId")
+        , @NamedQuery(name = "Comment.findCommentsByBlogId", query = "SELECT c FROM Comment c WHERE c.blog.id = :blogId")
+        , @NamedQuery(name = "Comment.findRatingByBlogId", query = "select avg(c.rating) from Comment c WHERE c.blog.id = :blogId")
+        , @NamedQuery(name = "Comment.findRatingCountByBlogId", query = "select count(c) from Comment c WHERE c.blog.id = :blogId")
 })
 
-public class Comment {
+
+@Entity
+public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "article__id", nullable = false)
-    private Integer articleId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "blog_id", nullable = false)
+    private Blog blog;
 
     @Column(name = "publicationDate", nullable = false)
     private Date publicationDate;
@@ -30,6 +38,29 @@ public class Comment {
     @Lob
     @Column(name = "content", nullable = false)
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Column(name = "rating")
+    private Float rating;
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getContent() {
         return content;
@@ -47,12 +78,12 @@ public class Comment {
         this.publicationDate = publicationDate;
     }
 
-    public Integer getArticleId() {
-        return articleId;
+    public Blog getBlog() {
+        return blog;
     }
 
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
+    public void setBlog(Blog blog) {
+        this.blog = blog;
     }
 
     public Integer getId() {

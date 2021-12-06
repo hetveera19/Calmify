@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Anubhav Nanda on 2021.10.29
+  - Copyright © 2021 Anubhav Nanda. All rights reserved.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Blogs" />
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <!-- In case of JSF validation error, set 'selected' to null in recipeController -->
+            <c:if test="#{facesContext.validationFailed}">
+                ${blogController.unselect()}
+            </c:if>
+
+            <!-- Set 'selected' to null in recipeController when the user refreshes / reloads this JSF page -->
+            <f:metadata>
+                <f:viewAction action="#{blogController.unselect()}" rendered="#{facesContext.postback}" />
+            </f:metadata>
+
+            <div align="center">
+                <p:card>
+                    <h:form id="UserBlogListForm">
+                        <p:dataScroller value="#{blogController.listOfUserBlogs}" id ="userBlogList" widgetVar="userBlogTable" var="aBlog" chunkSize="10">
+                            <p:panel style="text-align:left" >
+
+                                <h:panelGrid columns="3" style="width:100%"
+                                             columnClasses="columnBlogImage, columnMiddlePart, columnViewButton">
+                                    <p:graphicImage value="#{blogController.blogPhoto(aBlog.id, aBlog.extension)}" width="92px" style="float:left" />
+                                    <h:panelGrid style="width:100%; margin-left:10px">
+                                        <!-- Recipe name -->
+                                        <h:outputText value="#{aBlog.title}"/>
+                                        <h:outputText value="#{aBlog.summary}" style="float:left;" />
+                                        <p:rating readonly="true" value="#{blogController.getBlogRating(aBlog.id )}"/>
+                                    </h:panelGrid>
+
+                                    <p:commandLink value="Read More" styleClass="button" update=":blogDetailsForm,:CommentListForm"
+                                                   oncomplete="PF('blogDetailsDialog').show()"
+                                                   action="#{commentController.prepareCreate}"
+                                                   title="Read More">
+
+                                        <!--
+                                        When the Info Icon is clicked on (selected), the apiSearchController.selected method
+                                        is invoked to set the selected current recipe object to the aSearchedRecipe object.
+                                        -->
+                                        <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
+                                    </p:commandLink>
+
+                                    <p:commandLink value="Publish" styleClass="button" update=":blogDetailsForm"
+                                                   action="#{blogController.publish}" rendered="#{blogController.isPublished(aBlog.id) == false}"
+                                                   title="Publish">
+
+                                        <!--
+                                        When the Info Icon is clicked on (selected), the apiSearchController.selected method
+                                        is invoked to set the selected current recipe object to the aSearchedRecipe object.
+                                        -->
+                                        <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
+                                    </p:commandLink>
+                                    <p:commandButton id="publishButton" value="Publish" icon="fas fa-book-open"  styleClass="button"
+                                                     actionListener="#{blogController.publish(aBlog.id)}"
+                                                     update="userBlogList,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                    />
+
+                                    <!-- ***************************************************
+                                        Display a Confirmation dialog for the DELETE button
+                                        id is used since it is referenced to be activated or not
+                                    **************************************************** -->
+                                    <p:commandButton id="deleteButton" value="Delete" icon="fas fa-trash-alt"  styleClass="button"
+                                                     actionListener="#{blogController.destroy(aBlog.id)}"
+                                                     update="userBlogList,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                    >
+                                    </p:commandButton>
+
+
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataScroller>
+                    </h:form>
+                </p:card>
+            </div>
+
+            <!--
+            Clicking the Create button displays the included 
+            Create.xhtml file in a dialog window on top of this page.
+            -->
+
+            <ui:include src="/blog/BlogDetails.xhtml"/>
+
+
+        </ui:define>
+    </ui:composition>
+</html>

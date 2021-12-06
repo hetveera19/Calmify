@@ -148,10 +148,9 @@ Scale the image downward, but do not enlarge it beyond its actual width size.
 /* Style p:panelGrid Column 1 */
 .panelGridColumn1 {
     text-align: right;
-    white-space: nowrap;        /* Disallow line break */
     padding-top: 5px !important;
     padding-bottom: 5px !important;
-    background-color: papayawhip !important;
+    width: 25%;
 }
 
 /* Style p:panelGrid Column 2 */
@@ -161,6 +160,7 @@ Scale the image downward, but do not enlarge it beyond its actual width size.
     padding-top: 5px !important;
     padding-bottom: 5px !important;
     background-color: oldlace !important;
+    width: 75%;
 }
 
 /* Used to color panel backgrounds */
@@ -215,4 +215,87 @@ Scale the image downward, but do not enlarge it beyond its actual width size.
 
 .detail td {
     font-size: 24px;
+}
+
+/* Style class for <ul> */
+.verticalMenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 180px;
+    background-color: azure;
+    border: 1px solid darkgray;
+
+}
+
+/* Style class for <li> */
+.verticalMenuItem {
+    text-align: left;
+    border-bottom: 1px solid darkgray;
+}
+
+/* Style class for <li> and the <a> tag that defines a hyperlink */
+.verticalMenuItem a {
+    display: block;
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;  /* Do not underline the hyperlink */
+}
+
+/* Style class for <ul>, <li> and <a> hyperlink tag */
+.verticalMenu, .verticalMenuItem a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+}
+
+/* Style class for <li> last-child */
+.verticalMenuItem:last-child {
+    border-bottom: none;
+}
+
+/* Style class for <li> for mouse over state */
+.verticalMenuItem a:hover {
+    background-color: lightskyblue;
+}
+
+.columnBlogImage {
+    width: 100px;
+}
+.columnMiddlePart {
+    width: 75%;
+}
+.columnViewButton {
+    width: 10%;
+}
+
+.button  {
+    display: inline-block;
+    margin: auto;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 1.125em;
+    font-weight: 300;
+    text-decoration: none;
+    border: 2px solid #858585;
+    max-width: 350px;
+    text-align: center;
+    padding: 20px 25px 15px;
+    line-height: 1;
+    height: auto;
+    color: #969696;
+    background-color: transparent;
+}
+
+/* Used in headerTemplate to style user's small photo in a circle */
+.smallProfilePhoto {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: middle;
 }

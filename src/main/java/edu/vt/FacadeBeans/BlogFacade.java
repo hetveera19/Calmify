@@ -4,15 +4,16 @@
  */
 package edu.vt.FacadeBeans;
 
-import edu.vt.EntityBeans.Article;
+import edu.vt.EntityBeans.Blog;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 // @Stateless annotation implies that the conversational state with the client shall NOT be maintained.
 @Stateless
-public class ArticleFacade extends AbstractFacade<Article> {
+public class BlogFacade extends AbstractFacade<Blog> {
     /*
     ---------------------------------------------------------------------------------------------
     The EntityManager is an API that enables database CRUD (Create Read Update Delete) operations
@@ -31,12 +32,41 @@ public class ArticleFacade extends AbstractFacade<Article> {
         return entityManager;
     }
 
+    public int editBlog(Blog blog) {
+        getEntityManager().persist(blog);
+        return blog.getId();
+    }
+
+    public List<Blog> findUserBlogsByUserPrimaryKey(Integer primaryKey) {
+        /*
+        The following @NamedQuery definition is given in UserFile entity class file:
+        @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
+
+        The following statement obtains the results from the named database query.
+         */
+        return entityManager.createNamedQuery("Blog.findBlogsByUserId")
+                .setParameter("userId", primaryKey)
+                .getResultList();
+    }
+
+    public List<Blog> findBlogByPublished(Boolean published) {
+        /*
+        The following @NamedQuery definition is given in UserFile entity class file:
+        @NamedQuery(name = "UserFile.findUserFilesByUserId", query = "SELECT u FROM UserFile u WHERE u.userId.id = :userId")
+
+        The following statement obtains the results from the named database query.
+         */
+        return entityManager.createNamedQuery("Blog.findBlogsByPublished")
+                .setParameter("published", published)
+                .getResultList();
+    }
+
     /*
     This constructor method invokes its parent AbstractFacade's constructor method,
     which in turn initializes its entity class type T and entityClass instance variable.
      */
-    public ArticleFacade() {
-        super(Article.class);
+    public BlogFacade() {
+        super(Blog.class);
     }
 
 

@@ -57,6 +57,8 @@ public class UserController implements Serializable {
 
     private User selected;
 
+    private String UserLocation;
+
     /*
     The @EJB annotation directs the EJB Container Manager to inject (store) the object reference of the
     UserFacade bean into the instance variable 'userFacade' after it is instantiated at runtime.
@@ -187,6 +189,16 @@ public class UserController implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUserLocation()
+    {
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        User signedInUser = (User) sessionMap.get("user");
+
+        UserLocation = "https://www.google.com/maps/embed/v1/search?key=AIzaSyDFru9SVhCqkL9rwLv-PHtgPHwLcVQ8JEg&q=mental+health,"+ signedInUser.getCity() + signedInUser.getState() + ";";
+        System.out.println(UserLocation);
+        return UserLocation;
     }
 
     /*

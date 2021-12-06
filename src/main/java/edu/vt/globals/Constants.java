@@ -14,6 +14,12 @@ public final class Constants {
     Constants.CONSTANTNAME, i.e., ClassName.ClassVariableNameInCaps
 
     Constants are specified in capital letters.
+
+    */
+
+    public static final String EMAIL_SUBJECT = "Smile. Breathe. Calmify.";
+
+    /*
     
     =====================================================
     |   Our Design Decision for Use of External Files   |
@@ -38,14 +44,14 @@ public final class Constants {
 //    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/Balci/DocRoot/CloudStorage/PhotoStorage/";
 
     // Unix (macOS) or Linux
-//    public static final String FILES_ABSOLUTE_PATH  = "C:/Users/nanda/DocRoot/CloudStorage/FileStorage/";
-//    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/nanda/DocRoot/CloudStorage/PhotoStorage/";
+    public static final String BLOGS_ABSOLUTE_PATH  = "C:/Users/nanda/DocRoot/CloudStorage/FileStorage/";
+    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/nanda/DocRoot/CloudStorage/PhotoStorage/";
 
     //--------------------------------
     // To run on your AWS EC2 instance
     //--------------------------------
-    public static final String FILES_ABSOLUTE_PATH  = "/opt/wildfly/DocRoot/CloudStorage/FileStorage/";
-    public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/CloudStorage/PhotoStorage/";
+    //public static final String FILES_ABSOLUTE_PATH  = "/opt/wildfly/DocRoot/CloudStorage/FileStorage/";
+    //public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/CloudStorage/PhotoStorage/";
 
     /*
      ---------------------------------
@@ -77,14 +83,14 @@ public final class Constants {
     //---------------
     // To run locally
     //---------------
-    //public static final String FILES_URI  = "http://localhost:8080/files/";
-    //public static final String PHOTOS_URI = "http://localhost:8080/photos/";
+    public static final String BLOGS_URI  = "http://localhost:8080/files/";
+    public static final String PHOTOS_URI = "http://localhost:8080/photos/";
 
     //-----------------------------------------------------
     // To run on your AWS EC2 instance with your IP address
     //-----------------------------------------------------
-    public static final String FILES_URI  = "http://34.207.113.52:8080/files/";
-    public static final String PHOTOS_URI = "http://34.207.113.52:8080/photos/";
+    //public static final String FILES_URI  = "http://34.207.113.52:8080/files/";
+    //public static final String PHOTOS_URI = "http://34.207.113.52:8080/photos/";
 
     /* 
     =============================================
