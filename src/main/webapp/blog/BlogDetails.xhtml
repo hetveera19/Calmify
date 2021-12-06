@@ -21,78 +21,65 @@
     ==========================================================
     -->
     <p:dialog id="blogDetailsDialog" header="View Blog" widgetVar="blogDetailsDialog"
-              modal="true" width="60%" position="center" appendTo="@(body)"
-              showEffect="slide" hideEffect="explode" responsive="true" >
+              modal="true" width="60%" position="center" appendTo="@(body)" height="400"
+              showEffect="slide" hideEffect="explode" responsive="true">
         <!--
         There are various effect options to be used when displaying and closing the dialog.
         Use showEffect and hideEffect options to apply these effects:
             blind, bounce, clip, drop, explode, fade, fold, highlight, puff,
             pulsate, scale, shake, size, slide and transfer. [PrimeFaces user Guide]
         -->
-        <p:scrollPanel mode="native" style="height: 800px;">
-        <h:form id="blogDetailsForm" class="ui-datatable-data">
-                <h:panelGroup>
-                    <!-- CLOSE button -->
-                    <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
-                                     onclick="PF('blogDetailsDialog').hide()" />
-                </h:panelGroup>
-
+            <h:form id="blogDetailsForm" class="ui-datatable-data">
                 <div align="center">
-
                     <h:panelGroup id="display">
                         <!-- Display the selected recipe's photo -->
                         <h:outputText value="#{blogController.selected.title}" style="color: maroon"/>
                         <br /><br />
-                        <h:outputText value="#{blogController.selected.content}" escape="false"/>
+                        <div align="justify">
+                            <h:outputText value="#{blogController.selected.content}" escape="false"/>
+                        </div>
                         <br/>
                     </h:panelGroup>
                     <h:form id="commentForm" class="ui-datatable-data">
-                        <p:rating value="#{commentController.selected.rating}"/>
-
-                        <p:outputLabel value="Comment:" for="content" />
-                        <p:textEditor widgetVar="editor1" id = "content" value="#{commentController.selected.content}"
-                                      height="50"  required="true" requiredMessage="Content is required!" secure="false"/>
-
-                        <p:commandButton value="Post" icon="fas fa-save" styleClass="rounded-button"
-                                         ajax="false" actionListener="#{commentController.create(blogController.selected)}"
-                                         update="display,:blogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
-                        />
-                        &nbsp;
+                        <p:panel rendered="#{blogController.selected != null}">
+                            <p:outputLabel value="Comment:" for="content" />
+                            <br/><br/>
+                            <p:rating value="#{commentController.selected.rating}"/>
+                            <br/><br/>
+                            <p:inputText id = "content" value="#{commentController.selected.content}"
+                                      style="height: 50px; width: 80%; margin-left: 10%;" required="true" requiredMessage="Content is required!"/>
+                            <br/><br/>
+                            <div align="right" style="margin-right: 5%;">
+                                <p:commandButton value="Post" icon="fas fa-save" styleClass="rounded-button"
+                                             ajax="false" actionListener="#{commentController.create(blogController.selected)}"
+                                             update="display,:blogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                />
+                            </div>
+                            &nbsp;
+                        </p:panel>
                     </h:form>
                 </div>
-        </h:form>
+            </h:form>
 
-        <h:form id="CommentListForm">
-            <p:panel rendered="#{blogController.selected != null}">
-                <p:dataList value="#{commentController.getListOfBlogComments(blogController.selected)}"
-                            var="aComment"
-                            layout="list"
-                            rows="6"
-                            paginator="true"
-                            rowsPerPageTemplate="3,6,9,12,15,18,21,24"
-                            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                            pageLinks="5"
-                            style="width:100%">
-                    <!-- The p:panel defines a data grid cell displaying aSearchedRecipe data -->
-                    <p:panel style="text-align:left" >
-
-                        <h:panelGrid columns="3" style="width:100%"
-                                     columnClasses="columnRecipe, columnMiddlePart, columnInfoButton">
-                            <!--<p:graphicImage url="#{aArticle.}" width="92px" style="float:left" />-->
-
-                            <h:panelGrid style="width:100%; margin-left:10px">
-                                <!-- Recipe name -->
-                                <h:outputText value="#{aComment.content}" escape="false"/>
-
-                            </h:panelGrid>
-
-                        </h:panelGrid>
+            <p:card>
+                <h:form id="CommentListForm">
+                    <p:panel rendered="#{blogController.selected != null}">
+                        <p:repeat value="#{commentController.getListOfBlogComments(blogController.selected)}" var="aComment">
+                            <p:panel style="text-align:left" >
+                                <h:panelGrid columns="2" style="width:100%"
+                                     columnClasses="columnBlogImage, columnMiddlePart ">
+                                    <p:graphicImage url="#{commentController.userPhoto(aComment.user.id)}" width="92px" styleClass="smallProfilePhoto" style="float:left" />
+                                    <h:panelGrid style="width:100%; margin-left:10px">
+                                        <h:outputText value="#{aComment.user.firstName}" />
+                                        <h:outputText value="#{aComment.publicationDate}" />
+                                        <h:outputText value="#{aComment.content}" />
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:repeat>
                     </p:panel>
-
-                </p:dataList>
-            </p:panel>
-        </h:form>
-        </p:scrollPanel>
+                </h:form>
+            </p:card>
     </p:dialog>
 </ui:composition>
 </html>

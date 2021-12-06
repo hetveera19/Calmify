@@ -128,4 +128,32 @@ public final class Constants {
         "What was your favorite place to visit as a child?"
     };
 
+    public static String paypalEmailId="sb-dfe7478850514@business.example.com";
+    public static String paypalPassword="0eM-Cked";
+    public static String paypalSignature="AWAAFRIeFvQSQThbQlrHiawlbJmFAexaBTj3fnveemW8fb2Am.lDt-wK";
+    public static String CLIENTID="AcK238kuY-GBjvokTf7RKipvs9sWDnWYBXSQNhiEUP3gdWuBOJhvc-1RUj9isljb-4_KWAYe0JurIxYc";
+    public static String SECRET="EMpGQSGy1vXzAGt51VnuDQxFvcFJPlmxG5Ag1LsQKIe4npycbPcneso3KN9P8CsfLD_VEwNT7Tx6rl3l";
+    public static String paypalRequestBody="{" +
+            " \"sender_batch_header\":{" +
+            "\"sender_batch_id\":\"Payouts_2018_100007\"," +
+            "\"email_subject\":\"You have a payout!\","+
+            "\"email_message\":\"You have received a payout! Thanks for using our service!\"}," +
+            "\"items\":[" +
+            "{"+
+            "\"recipient_type\":\"EMAIL\","+
+            "\"amount\":{"+
+            "\"value\":\"9.87\""+
+            "\"currency\":\"USD\"},"+
+            "\"note\":\"Thanks for your patronage!\","+
+            "\"sender_item_id\":\"201403140001\","+
+            "\"receiver\":\"receiver@example.com\","+
+            "\"alternate_notification_method\":{"+
+            "\"phone\":{"+
+            "\"country_code\":\"1\","+
+            "\"national_number\":\"9999988888\"}"+
+            "}"+
+            "]"+
+            "}";
+
+
 }

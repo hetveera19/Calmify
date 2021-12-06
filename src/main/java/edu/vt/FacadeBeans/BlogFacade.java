@@ -32,7 +32,7 @@ public class BlogFacade extends AbstractFacade<Blog> {
         return entityManager;
     }
 
-    public int editBlog(Blog blog) {
+    public int createBlog(Blog blog) {
         getEntityManager().persist(blog);
         return blog.getId();
     }

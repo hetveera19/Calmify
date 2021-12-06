@@ -33,12 +33,12 @@
                             <p:commandButton id="dynaButton" type="button" icon="pi pi-list" style="background-color: darksalmon"/>
                             <p:menu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="white-space: nowrap;">
                                 <p:menuitem value="Home" outcome="/index" icon="fas fa-home"/>
-                                <p:menuitem value="Blog" outcome="/blog/List" icon="fas fa-list"/>
-                                <p:menuitem value="Spill Your Thoughts" action="#{blogController.prepareCreate}" icon="fas fa-pen"/>
+                                <p:menuitem value="Blog" outcome="/blog/List" icon="fas fa-sticky-note"/>
+                                <p:menuitem value="Payment" outcome="/Test" icon="fas fa-sticky-note"/>
                                 <!-- Menu Options IF a User is Signed In -->
                                 <c:if test="#{userController.isLoggedIn() == true}">
-                                    <p:menuitem value="My Blogs" outcome="/userBlog/List" icon="fas fa-list" />
-                                    <p:menuitem value="Maps Search" outcome="/map/maps" icon="fas fa-car"/>
+                                    <p:menuitem value="Spill Your Thoughts" action="#{blogController.prepareCreate}" icon="fas fa-pen"/>
+                                    <p:menuitem value="Maps Search" outcome="/map/maps" icon="fas fa-map-marker-alt"/>
                                     <p:menuitem outcome="/userAccount/Profile">
                                         <p:graphicImage cache="false" styleClass="smallProfilePhoto" value="#{userController.userPhoto()}" />
                                         &nbsp;My Account

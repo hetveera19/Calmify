@@ -59,6 +59,19 @@ public class Blog implements Serializable {
         this.published = published;
     }
 
+    @Override
+    public String toString() {
+        return "Blog{" +
+                "id=" + id +
+                ", publicationDate=" + publicationDate +
+                ", title='" + title + '\'' +
+                ", summary='" + summary + '\'' +
+                ", content='" + content + '\'' +
+                ", user=" + user +
+                ", extension='" + extension + '\'' +
+                ", published=" + published +
+                '}';
+    }
 
     public String getExtension() {
         return extension;

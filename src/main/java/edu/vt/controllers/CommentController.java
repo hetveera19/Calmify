@@ -7,9 +7,12 @@ package edu.vt.controllers;
 import edu.vt.EntityBeans.Blog;
 import edu.vt.EntityBeans.Comment;
 import edu.vt.EntityBeans.User;
+import edu.vt.EntityBeans.UserPhoto;
 import edu.vt.FacadeBeans.CommentFacade;
+import edu.vt.FacadeBeans.UserPhotoFacade;
 import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
+import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
 
 import javax.ejb.EJB;
@@ -68,6 +71,9 @@ public class CommentController implements Serializable {
      */
     @EJB
     private CommentFacade commentFacade;
+
+    @EJB
+    private UserPhotoFacade userPhotoFacade;
 
     // List of object references of Recipe objects
     private List<Comment> listOfBlogComments = null;
@@ -128,6 +134,32 @@ public class CommentController implements Serializable {
         selected = null;
         return "/blog/List?faces-redirect=true";
     }
+
+    public String userPhoto(int id) {
+
+        System.out.println("userPhoto - "+ id);
+        /*
+        The database primary key of the signed-in User object was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
+         */
+
+        List<UserPhoto> photoList = userPhotoFacade.findPhotosByUserPrimaryKey(id);
+
+        if (photoList.isEmpty()) {
+            // No user photo exists. Return defaultUserPhoto.png.
+            return Constants.PHOTOS_URI + "defaultUserPhoto.png";
+        }
+
+        /*
+        photoList.get(0) returns the object reference of the first Photo object in the list.
+        getThumbnailFileName() message is sent to that Photo object to retrieve its
+        thumbnail image file name, e.g., 5_thumbnail.jpeg
+         */
+        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
+
+        return Constants.PHOTOS_URI + thumbnailFileName;
+    }
+
 
     /*
      ***************************************

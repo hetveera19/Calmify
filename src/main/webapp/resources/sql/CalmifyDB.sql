@@ -45,6 +45,7 @@ CREATE TABLE Blog
     content         mediumtext NOT NULL,
     user_id         INT UNSIGNED,
     extension ENUM('jpeg', 'jpg', 'png', 'gif'),
+    published boolean,
     PRIMARY KEY     (id),
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );

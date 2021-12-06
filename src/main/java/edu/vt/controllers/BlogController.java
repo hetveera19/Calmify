@@ -5,6 +5,7 @@
 package edu.vt.controllers;
 
 import edu.vt.EntityBeans.Blog;
+import edu.vt.EntityBeans.Comment;
 import edu.vt.EntityBeans.User;
 import edu.vt.EntityBeans.UserPhoto;
 import edu.vt.FacadeBeans.BlogFacade;
@@ -83,7 +84,7 @@ public class BlogController implements Serializable {
     // List of object references of Recipe objects
     private List<Blog> listOfPublishedBlogs = null;
 
-    private  List<Blog> listofUserBlogs = null;
+    private List<Blog> listofUserBlogs = null;
 
     // selected = object reference of a selected Recipe object
     private Blog selected;
@@ -92,6 +93,16 @@ public class BlogController implements Serializable {
     private Boolean blogDataChanged;
 
     private double blogRating = 0;
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
+
+    private String test;
 
     private String filename;
     private UploadedFile file;
@@ -218,7 +229,6 @@ public class BlogController implements Serializable {
          */
         System.out.println(id);
         Blog blog = blogFacade.find(id);
-        System.out.println(blog.getPublished());
         return blog.getPublished();
     }
 
@@ -234,7 +244,9 @@ public class BlogController implements Serializable {
         System.out.println(selected.getId());
         selected.setPublished(true);
 
-        persist(PersistAction.UPDATE,"Blog Successfully Published!");
+        persist(PersistAction.UPDATE, "Blog Successfully Published!");
+
+        System.out.println("Test");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The UPDATE operation is successfully performed.
@@ -242,7 +254,6 @@ public class BlogController implements Serializable {
             listOfPublishedBlogs = null;     // Invalidate listOfRecipes to trigger re-query.
             listofUserBlogs = null;
         }
-
 
 
     }
@@ -260,6 +271,17 @@ public class BlogController implements Serializable {
         System.out.println("In Prepare Create");
         selected = new Blog();
         return "/blog/SpillYourThoughts?faces-redirect=true";
+
+    }
+
+    public String prepareEdit() {
+        /*
+        Instantiate a new Recipe object and store its object reference into
+        instance variable 'selected'. The Recipe class is defined in Recipe.java
+         */
+        System.out.println("In Blog Edit");
+        System.out.println(selected.getId());
+        return "/blog/EditYourThoughts?faces-redirect=true";
 
     }
 
@@ -284,6 +306,9 @@ public class BlogController implements Serializable {
         selected.setUser(signedInUser);
         selected.setPublicationDate(new Date());
         selected.setPublished(published);
+
+        System.out.println("1");
+
 
         // Check if a file is selected
         if (file.getSize() == 0) {
@@ -312,6 +337,8 @@ public class BlogController implements Serializable {
         // Obtain the uploaded file's MIME file type
         String mimeFileType = file.getContentType();
 
+        System.out.println("2");
+
         if (mimeFileType.startsWith("image/")) {
             // The uploaded file is an image file
             /*
@@ -339,11 +366,13 @@ public class BlogController implements Serializable {
                     "Selected file type is not a JPG, JPEG, PNG, or GIF!");
         }
 
+        System.out.println("3");
+
         // If it is an image file, obtain its file extension; otherwise, set png as the file extension anyway.
         String fileExtension = mimeFileType.startsWith("image/") ? mimeFileType.subSequence(6, mimeFileType.length()).toString() : "png";
         selected.setExtension(fileExtension);
 
-        persist(PersistAction.CREATE,"Blog was Successfully Created!");
+        persist(PersistAction.CREATE, "Blog was Successfully Created!");
 
         if (!JsfUtil.isValidationFailed()) {
 
@@ -363,7 +392,82 @@ public class BlogController implements Serializable {
     public void update() {
         Methods.preserveMessages();
 
-        persist(PersistAction.UPDATE,"Recipe was Successfully Updated!");
+        // Check if a file is selected
+        if (file.getSize() != 0) {
+
+            //We need to remove the old file also
+
+            Blog blog = blogFacade.find(selected.getId());
+            String extension = blog.getExtension();
+
+            String targetFileName = Constants.BLOGS_ABSOLUTE_PATH + selected.getId() + "." + extension;
+            try {
+                Files.deleteIfExists(Paths.get(targetFileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+            /*
+        MIME (Multipurpose Internet Mail Extensions) is a way of identifying files on
+        the Internet according to their nature and format.
+
+        A "Content-type" is simply a header defined in many protocols, such as HTTP, that
+        makes use of MIME types to specify the nature of the file currently being handled.
+
+        Some MIME file types: (See http://www.freeformatter.com/mime-types-list.html)
+
+            JPEG Image      = image/jpeg or image/jpg
+            PNG image       = image/png
+            GIF image       = image/gif
+            Plain text file = text/plain
+            HTML file       = text/html
+            JSON file       = application/json
+
+         Some of the MIME type mappings are specified in web.xml
+         */
+
+            // Obtain the uploaded file's MIME file type
+            String mimeFileType = file.getContentType();
+
+            System.out.println("2");
+
+            if (mimeFileType.startsWith("image/")) {
+                // The uploaded file is an image file
+            /*
+            The subSequence() method returns the portion of the mimeFileType string from the 6th
+            position to the last character. Note that it starts with "image/" which has 6 characters at
+            positions 0,1,2,3,4,5. Therefore, we start the subsequence at position 6 to obtain the file extension.
+             */
+                String fileExtension = mimeFileType.subSequence(6, mimeFileType.length()).toString();
+
+                String fileExtensionInCaps = fileExtension.toUpperCase();
+
+                switch (fileExtensionInCaps) {
+                    case "JPG":
+                    case "JPEG":
+                    case "PNG":
+                    case "GIF":
+                        // File is an acceptable image type
+                        break;
+                    default:
+                        Methods.showMessage("Fatal Error", "Unrecognized File Type!",
+                                "Selected file type is not a JPG, JPEG, PNG, or GIF!");
+                }
+            } else {
+                Methods.showMessage("Fatal Error", "Unrecognized File Type!",
+                        "Selected file type is not a JPG, JPEG, PNG, or GIF!");
+            }
+
+            System.out.println("3");
+
+            // If it is an image file, obtain its file extension; otherwise, set png as the file extension anyway.
+            String fileExtension = mimeFileType.startsWith("image/") ? mimeFileType.subSequence(6, mimeFileType.length()).toString() : "png";
+            selected.setExtension(fileExtension);
+        }
+
+        persist(PersistAction.UPDATE, "Blog was Successfully Updated!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The UPDATE operation is successfully performed.
@@ -384,7 +488,7 @@ public class BlogController implements Serializable {
 
         selected = blogFacade.find(id);
         System.out.println(selected.getId());
-        persist(PersistAction.DELETE,"Blog was Successfully Deleted!");
+        persist(PersistAction.DELETE, "Blog was Successfully Deleted!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The DELETE operation is successfully performed.
@@ -400,11 +504,13 @@ public class BlogController implements Serializable {
      *   Perform CREATE, UPDATE (EDIT), and DELETE (DESTROY, REMOVE) Operations in the Database   *
      **********************************************************************************************
      */
+
     /**
-     * @param persistAction refers to CREATE, UPDATE (Edit) or DELETE action
+     * @param persistAction  refers to CREATE, UPDATE (Edit) or DELETE action
      * @param successMessage displayed to inform the user about the result
      */
     private void persist(PersistAction persistAction, String successMessage) {
+        System.out.println(selected.toString());
         if (selected != null) {
             try {
                 if (persistAction != PersistAction.DELETE) {
@@ -418,26 +524,34 @@ public class BlogController implements Serializable {
 
                      RecipeFacade inherits the edit(selected) method from the AbstractFacade class.
                      */
-                    int id = blogFacade.editBlog(selected);
+                    int id;
+                    if (persistAction == PersistAction.CREATE) {
+                        id = blogFacade.createBlog(selected);
+                    }
+                    else {
+                        id = selected.getId();
+                        blogFacade.edit(selected);
+                    }
                     /*
                     InputStream is an abstract class, which is the superclass of all classes representing
                     an input stream of bytes. It is imported as: import java.io.InputStream;
                     Convert the uploaded file into an input stream of bytes.
                     */
-                    System.out.println(id);
 
-                    String targetFileName =  id + "." + selected.getExtension();
+                    if (file.getSize() != 0) {
+                        String targetFileName = id + "." + selected.getExtension();
 
-                    /*
-                    InputStream is an abstract class, which is the superclass of all classes representing
-                    an input stream of bytes. It is imported as: import java.io.InputStream;
-                    Convert the uploaded file into an input stream of bytes.
-                    */
-                    InputStream inputStream = file.getInputStream();
+                        /*
+                        InputStream is an abstract class, which is the superclass of all classes representing
+                        an input stream of bytes. It is imported as: import java.io.InputStream;
+                        Convert the uploaded file into an input stream of bytes.
+                        */
+                        InputStream inputStream = file.getInputStream();
 
-                    // Write the uploaded file's input stream of bytes under the photo object's
-                    // filename using the inputStreamToFile method given below
-                    File uploadedFile = inputStreamToFile(inputStream, targetFileName);
+                        // Write the uploaded file's input stream of bytes under the photo object's
+                        // filename using the inputStreamToFile method given below
+                        File uploadedFile = inputStreamToFile(inputStream, targetFileName);
+                    }
 
                 } else {
                     /*
@@ -449,6 +563,8 @@ public class BlogController implements Serializable {
 
                      RecipeFacade inherits the remove(selected) method from the AbstractFacade class.
                      */
+                    String targetFileName = Constants.BLOGS_ABSOLUTE_PATH + selected.getId() + "." + selected.getExtension();
+                    Files.deleteIfExists(Paths.get(targetFileName));
                     blogFacade.remove(selected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
@@ -461,11 +577,11 @@ public class BlogController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex,"A persistence error occurred.");
+                    JsfUtil.addErrorMessage(ex, "A persistence error occurred.");
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex,"A persistence error occurred.");
+                JsfUtil.addErrorMessage(ex, "A persistence error occurred.");
             }
         }
     }
@@ -475,6 +591,7 @@ public class BlogController implements Serializable {
     Write Given InputStream into a File with Given Name
     ***************************************************
      */
+
     /**
      * @param inputStream of bytes to be written into file with name targetFilename
      * @return the created file targetFile

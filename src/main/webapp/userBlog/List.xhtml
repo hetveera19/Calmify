@@ -39,12 +39,12 @@
 
                                 <h:panelGrid columns="3" style="width:100%"
                                              columnClasses="columnBlogImage, columnMiddlePart, columnViewButton">
-                                    <p:graphicImage value="#{blogController.blogPhoto(aBlog.id, aBlog.extension)}" width="92px" style="float:left" />
+                                    <p:graphicImage cache="false" value="#{blogController.blogPhoto(aBlog.id, aBlog.extension)}" width="92px" style="float:left" />
                                     <h:panelGrid style="width:100%; margin-left:10px">
                                         <!-- Recipe name -->
                                         <h:outputText value="#{aBlog.title}"/>
                                         <h:outputText value="#{aBlog.summary}" style="float:left;" />
-                                        <p:rating readonly="true" value="#{blogController.getBlogRating(aBlog.id )}"/>
+                                        <p:rating readonly="true" value="#{blogController.getBlogRating(aBlog.id)}" rendered="#{blogController.getBlogRating(aBlog.id) != 0}"/>
                                     </h:panelGrid>
 
                                     <p:commandLink value="Read More" styleClass="button" update=":blogDetailsForm,:CommentListForm"
@@ -59,8 +59,8 @@
                                         <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
                                     </p:commandLink>
 
-                                    <p:commandLink value="Publish" styleClass="button" update=":blogDetailsForm"
-                                                   action="#{blogController.publish}" rendered="#{blogController.isPublished(aBlog.id) == false}"
+                                    <p:commandLink value="Publish" styleClass="button" update=":blogDetailsForm,:CommentListForm"
+                                                   action="#{blogController.publish(aBlog.id)}" rendered="#{blogController.isPublished(aBlog.id) == false}"
                                                    title="Publish">
 
                                         <!--
@@ -69,10 +69,15 @@
                                         -->
                                         <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
                                     </p:commandLink>
-                                    <p:commandButton id="publishButton" value="Publish" icon="fas fa-book-open"  styleClass="button"
-                                                     actionListener="#{blogController.publish(aBlog.id)}"
-                                                     update="userBlogList,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
-                                    />
+
+                                    <p:commandLink value="Edit" styleClass="button" update=":UserBlogListForm"
+                                                   action="#{blogController.prepareEdit}" title="Edit">
+                                        <!--
+                                        When the Info Icon is clicked on (selected), the apiSearchController.selected method
+                                        is invoked to set the selected current recipe object to the aSearchedRecipe object.
+                                        -->
+                                        <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
+                                    </p:commandLink>
 
                                     <!-- ***************************************************
                                         Display a Confirmation dialog for the DELETE button
