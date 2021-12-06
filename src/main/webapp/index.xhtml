@@ -71,12 +71,12 @@
             <p:galleria value="#{galleriaManager.listOfPhotos}" var="aPhoto"
                         responsiveOptions="#{galleriaManager.responsiveOptions1}"
                         circular="true" autoPlay="true" transitionInterval="4000"
-                        showThumbnails="false" showIndicators="true"  panelWidth="500" panelHeight="330" style="max-width: 850px">
+                        showThumbnails="false" showIndicators="true" style="max-width: 1920px">
 
-                <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
+                <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width:100%; display: block;" />
             </p:galleria>
         </div>
 
-        </ui:define>
-    </ui:composition>
+    </ui:define>
+</ui:composition>
 </html>

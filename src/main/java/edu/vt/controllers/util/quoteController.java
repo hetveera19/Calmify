@@ -24,6 +24,7 @@ import org.primefaces.shaded.json.JSONObject;
 public class quoteController implements Serializable{
 
     public String getQuote() {
+
         // This sets the necessary flag to ensure the messages are preserved.
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
