@@ -578,6 +578,31 @@ public class UserController implements Serializable {
         }
     }
 
+    public void unsubscribe() {
+
+        Methods.preserveMessages();
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        User unsubscribeUser = (User) sessionMap.get("user");
+
+        try {
+
+            // Store the changes in the database
+            unsubscribeUser.setSubscribe(false);
+            userFacade.edit(unsubscribeUser);
+
+            Methods.showMessage("Information", "Success!",
+                    "User's Account is Successfully Unsubscribed!");
+
+        } catch (EJBException ex) {
+            username = "";
+            Methods.showMessage("Fatal Error",
+                    "Something went wrong while unsubscribing user's profile!",
+                    "See: " + ex.getMessage());
+        }
+
+    }
+
+
     /*
     ***************************************
     Return Signed-In User's Thumbnail Photo

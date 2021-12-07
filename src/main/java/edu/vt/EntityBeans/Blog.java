@@ -1,10 +1,11 @@
 package edu.vt.EntityBeans;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
-@Table(name = "blog", indexes = {
+@Table(name = "Blog", indexes = {
         @Index(name = "user_id", columnList = "user_id")
 })
 @Entity
@@ -26,10 +27,11 @@ public class Blog implements Serializable {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "publicationDate", nullable = false)
+    @Column(name = "publication_date", nullable = false)
     private Date publicationDate;
 
     @Column(name = "title", nullable = false)
+    @Size(min = 1, max = 128)
     private String title;
 
     @Lob

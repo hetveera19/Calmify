@@ -4,7 +4,7 @@
 # Created by Anubhav Nanda
 # ---------------------------------------------------
 
-DROP TABLE IF EXISTS User, UserPhoto, Blog, Comment;
+DROP TABLE IF EXISTS UserPhoto, Comment, Blog, Cart, ShopItems, Orders, User;
 
 /* The User table contains attributes of interest of a User. */
 CREATE TABLE User
@@ -23,6 +23,7 @@ CREATE TABLE User
     security_question_number INT NOT NULL,   /* Refers to the number of the selected security question */
     security_answer VARCHAR(128) NOT NULL,
     email VARCHAR(128) NOT NULL,
+    subscribe boolean default '1',
     PRIMARY KEY (id)
 );
 
@@ -35,15 +36,14 @@ CREATE TABLE UserPhoto
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
 
-
 CREATE TABLE Blog
 (
-    id              int unsigned NOT NULL auto_increment,
-    publicationDate date NOT NULL,
-    title           varchar(255) NOT NULL,
-    summary         text NOT NULL,
-    content         mediumtext NOT NULL,
-    user_id         INT UNSIGNED,
+    id               int unsigned NOT NULL auto_increment,
+    publication_date date NOT NULL,
+    title            varchar(255) NOT NULL,
+    summary          text NOT NULL,
+    content          mediumtext NOT NULL,
+    user_id          INT UNSIGNED,
     extension ENUM('jpeg', 'jpg', 'png', 'gif'),
     published boolean,
     PRIMARY KEY     (id),
@@ -52,12 +52,12 @@ CREATE TABLE Blog
 
 CREATE TABLE Comment
 (
-    id              int unsigned NOT NULL auto_increment,
-    blog_id         int unsigned NOT NULL,
-    publicationDate date NOT NULL,
-    content         text NOT NULL,
-    user_id         INT UNSIGNED,
-    rating          FLOAT UNSIGNED,
+    id               int unsigned NOT NULL auto_increment,
+    blog_id          int unsigned NOT NULL,
+    publication_date date NOT NULL,
+    content          text NOT NULL,
+    user_id          INT UNSIGNED,
+    rating           FLOAT UNSIGNED,
     PRIMARY KEY     (id),
     FOREIGN KEY (blog_id) REFERENCES Blog(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
@@ -65,24 +65,48 @@ CREATE TABLE Comment
 
 create table ShopItems
 (
-    id              int unsigned NOT NULL auto_increment,
-    name            varchar(256)     not null,
-    description     varchar(2048)    not null,
-    category        varchar(64)      not null,
-    image_url       varchar(256)     null,
-    price           double default 0 not null,
-    PRIMARY KEY     (id)
+    id                int unsigned auto_increment primary key,
+    name              varchar(256)     not null,
+    description       varchar(2048)    not null,
+    category          varchar(64)      not null,
+    image_url         varchar(256)     null,
+    price             double default 0 not null,
+    short_description varchar(128)     not null
 );
 
-create table UserItems
+create table Orders
 (
-    Id          int unsigned auto_increment primary key,
-    Name        varchar(256)     not null,
-    description varchar(2048)    not null,
-    category    varchar(64)      not null,
-    image_url   varchar(256)     null,
-    price       double default 0 not null,
-    user_id     int unsigned     null,
-    PRIMARY KEY     (id),
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    id                int unsigned auto_increment primary key,
+    name              varchar(256)     not null,
+    description       varchar(2048)    not null,
+    category          varchar(64)      not null,
+    image_url         varchar(256)     null,
+    price             double default 0 not null,
+    short_description varchar(1024)    not null,
+    user_id           int unsigned     not null,
+    item_id           int unsigned     not null,
+    foreign key (user_id) references User (id) on delete cascade,
+    foreign key (item_id) references ShopItems (Id) on delete cascade
 );
+
+create index item_id
+    on Orders (item_id);
+
+create index user_id
+    on Orders (user_id);
+
+
+create table Cart
+(
+    id      int unsigned auto_increment primary key,
+    user_id int unsigned not null,
+    item_id int unsigned not null,
+    foreign key (user_id) references User (id) on delete cascade,
+    foreign key (item_id) references ShopItems (Id)  on delete cascade
+);
+
+create index item_id
+    on Cart (item_id);
+
+create index user_id
+    on Cart (user_id);

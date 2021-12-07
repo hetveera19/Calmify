@@ -38,10 +38,6 @@ dependencies {
     // MySQL JDBC Connector to Java is configured in WildFly
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.26'
 
-    implementation "com.stripe:stripe-java:20.90.0"
-
-    compileOnly "com.sparkjava:spark-core:2.9.3" // add to build.gradle (for Java users)
-
     implementation group: 'com.paypal.sdk', name: 'rest-api-sdk', version: '1.14.0'
 
     implementation group: 'com.paypal.sdk', name: 'paypal-core', version: '1.7.2'

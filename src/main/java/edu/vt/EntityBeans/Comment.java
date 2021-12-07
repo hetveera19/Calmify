@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Table(name = "comment", indexes = {
+@Table(name = "Comment", indexes = {
         @Index(name = "blog_id", columnList = "blog_id"),
         @Index(name = "user_id", columnList = "user_id")
 })
@@ -32,7 +32,7 @@ public class Comment implements Serializable {
     @JoinColumn(name = "blog_id", nullable = false)
     private Blog blog;
 
-    @Column(name = "publicationDate", nullable = false)
+    @Column(name = "publication_date", nullable = false)
     private Date publicationDate;
 
     @Lob

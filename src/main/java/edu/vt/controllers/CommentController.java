@@ -14,16 +14,20 @@ import edu.vt.controllers.util.JsfUtil;
 import edu.vt.controllers.util.JsfUtil.PersistAction;
 import edu.vt.globals.Constants;
 import edu.vt.globals.Methods;
+import org.primefaces.event.RateEvent;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,6 +79,9 @@ public class CommentController implements Serializable {
     @EJB
     private UserPhotoFacade userPhotoFacade;
 
+    @Inject
+    private UserController userController;
+
     // List of object references of Recipe objects
     private List<Comment> listOfBlogComments = null;
 
@@ -85,10 +92,10 @@ public class CommentController implements Serializable {
     private Boolean commentDataChanged;
 
     public List<Comment> getListOfBlogComments(Blog blog) {
-        System.out.println(blog.getId());
         listOfBlogComments = null;
         if (listOfBlogComments == null && blog.getId() != null) {
             listOfBlogComments = commentFacade.findCommentsByBlogPrimaryKey(blog.getId());
+            System.out.println(blog.getId());
         }
         return listOfBlogComments;
     }
@@ -135,9 +142,12 @@ public class CommentController implements Serializable {
         return "/blog/List?faces-redirect=true";
     }
 
-    public String userPhoto(int id) {
+    public void setRating(){
+        System.out.println("In Set Rating");
+        selected.setRating(1.0F);
+    }
 
-        System.out.println("userPhoto - "+ id);
+    public String userPhoto(int id) {
         /*
         The database primary key of the signed-in User object was put into the SessionMap
         in the initializeSessionMap() method in LoginManager upon user's sign in.
@@ -160,6 +170,30 @@ public class CommentController implements Serializable {
         return Constants.PHOTOS_URI + thumbnailFileName;
     }
 
+    public String publicationDay(Date date) {
+
+        TimeUnit time;
+        long diffrence;
+        String returnMsg;
+
+        Date systemDate = java.util.Calendar.getInstance().getTime();
+        long diff = systemDate.getTime() - date.getTime();
+        time = TimeUnit.DAYS;
+        diffrence = time.convert(diff, TimeUnit.MILLISECONDS);
+        returnMsg = "Posted " + diffrence + " days ago";
+        if (diffrence == 0)
+        {
+            returnMsg = "Posted today";
+
+        }
+        return returnMsg;
+    }
+
+    public int ratingConversion(float rating) {
+        int rate = (int) rating;
+        return rate;
+    }
+
 
     /*
      ***************************************
@@ -168,40 +202,51 @@ public class CommentController implements Serializable {
      */
     public void prepareCreate() {
         /*
-        Instantiate a new Recipe object and store its object reference into
-        instance variable 'selected'. The Recipe class is defined in Recipe.java
+        Instantiate a new Comment object and store its object reference into
+        instance variable 'selected'. The Comment class is defined in Comment.java
          */
         System.out.println("In Comment Create");
         selected = new Comment();
-
     }
 
     /*
      ********************************************
-     *   CREATE a New Recipe in the Database       *
+     *   CREATE a New Comment in the Database   *
      ********************************************
      */
     public void create(Blog blog) {
         Methods.preserveMessages();
 
-        /*
-        'user', the object reference of the signed-in user, was put into the SessionMap
-        in the initializeSessionMap() method in LoginManager upon user's sign in.
-        */
+        if(selected.getRating() == null && selected.getContent().length() == 0)
+        {
+            Methods.showMessage("Error",
+                    "Unable to Post!", "To Post a comment, user must provide either rating or content!");
+        }
+        else if (userController.isLoggedIn() == false)
+        {
+            Methods.showMessage("Information",
+                    "Unable to Post!", "To Post a comment, a user must have signed in!");
+        }
+        else {
+            /*
+            'user', the object reference of the signed-in user, was put into the SessionMap
+            in the initializeSessionMap() method in LoginManager upon user's sign in.
+            */
 
-        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        User signedInUser = (User) sessionMap.get("user");
+            Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+            User signedInUser = (User) sessionMap.get("user");
 
-        selected.setPublicationDate(new Date());
-        selected.setBlog(blog);
-        selected.setUser(signedInUser);
+            selected.setPublicationDate(new Date());
+            selected.setBlog(blog);
+            selected.setUser(signedInUser);
 
-        persist(PersistAction.CREATE,"Comment Successfully Posted!");
+            persist(PersistAction.CREATE, "Comment Successfully Posted!");
 
-        if (!JsfUtil.isValidationFailed()) {
-            // No JSF validation error. The CREATE operation is successfully performed.
-            selected = null;        // Remove selection
-            listOfBlogComments = null;      // Invalidate listOfRecipes to trigger re-query.
+            if (!JsfUtil.isValidationFailed()) {
+                // No JSF validation error. The CREATE operation is successfully performed.
+                selected = null;        // Remove selection
+                listOfBlogComments = null;      // Invalidate listOfBlogComments to trigger re-query.
+            }
         }
     }
 

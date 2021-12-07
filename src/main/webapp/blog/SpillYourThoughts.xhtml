@@ -21,10 +21,11 @@
 
     <!-- Create the content for this page below -->
     <ui:define name="editableContent">
-
+        <h2 align="center">Be part of the conversation.</h2>
+        <h1 align="center">Celebrate wins, ask for help, or be the support someone needs to get through the day. We take it day-by-day together.</h1>
         <h:form id="blogCreateForm" class="ui-datatable-data" enctype="multipart/form-data" style="width: 80%; margin-left: 10%;">
             <h:panelGroup id="display" >
-                <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                <p:panelGrid columns="2" columnClasses="writePanelGridColumn1, panelGridColumn2"
                              rendered="#{blogController.selected != null}">
 
                 <!--
@@ -36,7 +37,7 @@
                     -->
                     <p:outputLabel value="Title:" for="title"/>
                     <p:inputText id="title" value="#{blogController.selected.title}" style="width:300px"
-                                 required="true" requiredMessage="Title is required!"/>
+                                 required="true" requiredMessage="Title is required!" maxlength="255"/>
 
                     <p:outputLabel value="Summary:" for="summary"/>
                     <p:inputText id="summary" value="#{blogController.selected.summary}" style="width:300px"
@@ -63,20 +64,27 @@
                     <p:outputLabel
                             value="Click Choose File to select an existing photo on your computer and then click Upload to upload it"
                             for="file"/>
-                    <p:fileUpload id="file" value="#{blogController.file}" mode="simple"/>
+                    <p:fileUpload id="file" value="#{blogController.file}" mode="simple" dragDropSupport="true" sizeLimit="10000000" required="false" allowTypes="GIF, JPEG, JPG, PNG" invalidFileMessage="Only GIF, JPEG, JPG, PNG types are allowed" invalidSizeMessage="Maximum Size allowed is 10MB." />
                 </p:panelGrid>
+            </h:panelGroup>
+            <h:panelGroup>
                 <br/>
                 <div align="center">
-
                     <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
-                                     ajax="false" actionListener="#{blogController.create(0)}"
-                                     update="display,:UseBlogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                     ajax="false" action="#{blogController.create(0)}"
                     />
                     &nbsp;&nbsp;
-                    <p:commandButton value="Save &amp; Publish" icon="fas fa-save" styleClass="rounded-button"
-                                     ajax="false" actionListener="#{blogController.create(1)}"
+                    <p:commandButton value="Save &amp; Publish" icon="fas fa-upload" styleClass="rounded-button"
+                                     ajax="false" action="#{blogController.create(1)}"
                                      update="display,:blogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                     />
+                    &nbsp;&nbsp;
+
+                    <p:button id="publicBlogsButton" icon="far fa-comment-dots" styleClass="rounded-button"
+                              outcome="/blog/List" value="Public Blog" />
+                    &nbsp;&nbsp;
+                    <p:button id="myBlogsButton" icon="fas fa-file-alt" styleClass="rounded-button"
+                              outcome="/userBlog/List" value="My Blog" />
                 </div>
             </h:panelGroup>
         </h:form>

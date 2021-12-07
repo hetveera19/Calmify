@@ -15,15 +15,16 @@
 
     <ui:define name="title">
         <!-- Set the page title -->
-        <h:outputText value="Database Search" />
+        <h:outputText value="Show Up At" />
     </ui:define>
 
     <!-- Create the content for this page below -->
     <ui:define name="editableContent">
+        <h2 align="center">Near by Places to Look out for</h2>
         <iframe
-                width="100%"
-                height="400px"
-                frameborder="0" style="border:0;"
+                width="80%"
+                height="550px"
+                frameborder="0" style="border:0; margin-left: 10%;"
                 src="#{userController.userLocation}">
         </iframe>
     </ui:define>

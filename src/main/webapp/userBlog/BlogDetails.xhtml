@@ -30,7 +30,6 @@
             pulsate, scale, shake, size, slide and transfer. [PrimeFaces user Guide]
         -->
             <h:form id="blogDetailsForm" class="ui-datatable-data">
-                <input type="text"  style="display:none" />
                 <div align="center">
                     <h:panelGroup id="display">
                         <!-- Display the selected recipe's photo -->
@@ -41,27 +40,9 @@
                         </div>
                         <br/>
                     </h:panelGroup>
-                    <h:form id="commentForm" class="ui-datatable-data">
-                        <p:growl id="messages" showDetail="true"/>
-                        <p:panel rendered="#{blogController.selected != null and userController.isLoggedIn() == true}">
-                            <p:outputLabel value="Comment:" for="content" />
-                            <br/><br/>
-                            <p:rating value="#{commentController.selected.rating}"/>
-                            <br/><br/>
-                            <p:inputText id = "content" value="#{commentController.selected.content}"
-                                      style="height: 50px; width: 80%; margin-left: 10%;"/>
-                            <br/><br/>
-                            <div align="right" style="margin-right: 5%;">
-                                <p:commandButton value="Post" icon="fas fa-save" styleClass="rounded-button"
-                                             ajax="false" actionListener="#{commentController.create(blogController.selected)}"
-                                             update="display,:blogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
-                                />
-                            </div>
-                            &nbsp;
-                        </p:panel>
-                    </h:form>
                 </div>
             </h:form>
+
 
         <p:card>
             <h:form id="CommentListForm">
@@ -74,7 +55,6 @@
                                 <h:panelGrid style="width:100%; margin-left:10px">
                                     <h:outputText value="#{aComment.user.firstName}" />
                                     <h:outputText value="#{commentController.publicationDay(aComment.publicationDate)}" />
-                                    <p:rating readonly="true" value="#{commentController.ratingConversion(aComment.rating)}" />
                                     <h:outputText value="#{aComment.content}" />
                                 </h:panelGrid>
                             </h:panelGrid>
@@ -83,7 +63,6 @@
                 </p:panel>
             </h:form>
         </p:card>
-
     </p:dialog>
 </ui:composition>
 </html>

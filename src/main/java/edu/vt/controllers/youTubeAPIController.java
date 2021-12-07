@@ -1,7 +1,7 @@
 package edu.vt.controllers;
 import java.net.URL;
 
-import edu.vt.EntityBeans.youTubeVideos;
+import edu.vt.EntityBeans.YouTubeVideos;
 import edu.vt.globals.Methods;
 import edu.vt.globals.Constants;
 import java.io.*;
@@ -12,13 +12,11 @@ import javax.faces.context.FacesContext;
 import org.primefaces.shaded.json.JSONArray;
 import org.primefaces.shaded.json.JSONObject;
 
-
-
 @SessionScoped
 @Named("youTubeAPIController")
 
 public class youTubeAPIController implements Serializable {
-    private List<youTubeVideos> videoList;
+    private List<YouTubeVideos> videoList;
     private String idOfVideoToPlay;
 
     public String getIdOfVideoToPlay() {
@@ -30,7 +28,7 @@ public class youTubeAPIController implements Serializable {
     }
 
 
-    public List<youTubeVideos> getVideo(int num) throws Exception {
+    public List<YouTubeVideos> getVideo(int num) throws Exception {
         videoList = new ArrayList();
         // This sets the necessary flag to ensure the messages are preserved.
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
@@ -73,8 +71,6 @@ public class youTubeAPIController implements Serializable {
                     JsonData=Constants.youTube5;
                 if(num==6)
                     JsonData=Constants.youTube6;
-
-
             } else {
                 if(num==1)
                     Constants.youTube1 = JsonData;
@@ -88,9 +84,6 @@ public class youTubeAPIController implements Serializable {
                     Constants.youTube5 = JsonData;
                 if(num==6)
                     Constants.youTube6 = JsonData;
-
-
-
             }
                 // Create a new JSON array from the returned file
                 JSONObject JsonObject = new JSONObject(JsonData);
@@ -101,7 +94,7 @@ public class youTubeAPIController implements Serializable {
                 JSONObject jsonObject = items.getJSONObject(index);
                 JSONObject videoItem = jsonObject.getJSONObject("id");
                 String id = videoItem.optString("videoId", "");
-                youTubeVideos obj = new youTubeVideos(id);
+                YouTubeVideos obj = new YouTubeVideos(id);
                 videoList.add(obj);
                 //System.out.println(obj.getSrc());
                 index++;
@@ -166,12 +159,9 @@ public class youTubeAPIController implements Serializable {
         } catch (Exception e) {
             return null;
         } finally {
-
             if (reader != null) {
-
                 reader.close();
             }
         }
     }
-
 }

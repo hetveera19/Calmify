@@ -2,7 +2,7 @@ package edu.vt.EntityBeans;
 
 import java.io.Serializable;
 
-public class podcast implements Serializable {
+public class YouTubeVideos implements Serializable {
     private String src;
 
     public String getSrc() {
@@ -13,7 +13,8 @@ public class podcast implements Serializable {
         this.src = src;
     }
 
-    public podcast(String src) {
+    public YouTubeVideos(String src) {
         this.src = src;
     }
 }
+

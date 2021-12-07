@@ -21,6 +21,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.flow.SwitchCase;
 import javax.imageio.ImageIO;
 import javax.inject.Named;
 import java.awt.image.BufferedImage;
@@ -204,10 +205,7 @@ public class BlogController implements Serializable {
         in the initializeSessionMap() method in LoginManager upon user's sign in.
         */
 
-        System.out.println(id);
-        System.out.println(Constants.BLOGS_URI + "defaultBlogPhoto.jpeg");
-
-        if (!(new File(Constants.BLOGS_ABSOLUTE_PATH + id + "." + "jpeg").exists())) {
+        if (!(new File(Constants.BLOGS_ABSOLUTE_PATH + id + "." + extension).exists())) {
             // No blog photo exists. Return defaultBlogPhoto.png.
             return Constants.BLOGS_URI + "defaultBlogPhoto.jpeg";
         }
@@ -217,8 +215,7 @@ public class BlogController implements Serializable {
         getThumbnailFileName() message is sent to that Photo object to retrieve its
         thumbnail image file name, e.g., 5_thumbnail.jpeg
          */
-        System.out.println(Constants.BLOGS_URI + id + "." + "jpeg");
-        return Constants.BLOGS_URI + id + "." + "jpeg";
+        return Constants.BLOGS_URI + id + "." + extension;
     }
 
     public boolean isPublished(int id) {
@@ -274,56 +271,59 @@ public class BlogController implements Serializable {
 
     }
 
-    public String prepareEdit() {
+    public String prepareEdit(int id) {
         /*
-        Instantiate a new Recipe object and store its object reference into
-        instance variable 'selected'. The Recipe class is defined in Recipe.java
+        Set selected to selected blog and redirect to edit your blog
          */
-        System.out.println("In Blog Edit");
-        System.out.println(selected.getId());
-        return "/blog/EditYourThoughts?faces-redirect=true";
+        System.out.println("In Prepare Edit");
+        selected = blogFacade.find(id);
+        return "/userBlog/EditYourThoughts?faces-redirect=true";
 
+    }
+
+    public String redirect()
+    {
+        return "/userBlog/List?faces-redirect=true";
     }
 
     /*
      ********************************************
-     *   CREATE a New Recipe in the Database       *
+     *   CREATE a New Blog in the Database       *
      ********************************************
      */
-    public void create(int publish) {
+    public String create(int publish) {
         Methods.preserveMessages();
 
+        boolean published = false;
+
+        if (publish == 1)
+            published = true;
+
         /*
-            'user', the object reference of the signed-in user, was put into the SessionMap
-            in the initializeSessionMap() method in LoginManager upon user's sign in.
+        'user', the object reference of the signed-in user, was put into the SessionMap
+        in the initializeSessionMap() method in LoginManager upon user's sign in.
         */
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         User signedInUser = (User) sessionMap.get("user");
-        System.out.println(publish);
 
-        boolean published = false;
 
         selected.setUser(signedInUser);
         selected.setPublicationDate(new Date());
         selected.setPublished(published);
-
-        System.out.println("1");
-
+        System.out.println(published);
 
         // Check if a file is selected
-        if (file.getSize() == 0) {
-            Methods.showMessage("Information", "No File Selected!",
-                    "You need to choose a file first before clicking Upload.");
-        }
+        if (file != null && file.getSize() != 0) {
+            System.out.println("File Size Not Zero");
 
-        /*
-        MIME (Multipurpose Internet Mail Extensions) is a way of identifying files on
-        the Internet according to their nature and format.
+            /*
+            MIME (Multipurpose Internet Mail Extensions) is a way of identifying files on
+            the Internet according to their nature and format.
 
-        A "Content-type" is simply a header defined in many protocols, such as HTTP, that
-        makes use of MIME types to specify the nature of the file currently being handled.
+            A "Content-type" is simply a header defined in many protocols, such as HTTP, that
+            makes use of MIME types to specify the nature of the file currently being handled.
 
-        Some MIME file types: (See http://www.freeformatter.com/mime-types-list.html)
+            Some MIME file types: (See http://www.freeformatter.com/mime-types-list.html)
 
             JPEG Image      = image/jpeg or image/jpg
             PNG image       = image/png
@@ -332,20 +332,19 @@ public class BlogController implements Serializable {
             HTML file       = text/html
             JSON file       = application/json
 
-         Some of the MIME type mappings are specified in web.xml
-         */
-        // Obtain the uploaded file's MIME file type
-        String mimeFileType = file.getContentType();
+            Some of the MIME type mappings are specified in web.xml
+            */
+            // Obtain the uploaded file's MIME file type
+            String mimeFileType = file.getContentType();
 
-        System.out.println("2");
 
-        if (mimeFileType.startsWith("image/")) {
+            if (mimeFileType.startsWith("image/")) {
             // The uploaded file is an image file
             /*
             The subSequence() method returns the portion of the mimeFileType string from the 6th
             position to the last character. Note that it starts with "image/" which has 6 characters at
             positions 0,1,2,3,4,5. Therefore, we start the subsequence at position 6 to obtain the file extension.
-             */
+            */
             String fileExtension = mimeFileType.subSequence(6, mimeFileType.length()).toString();
 
             String fileExtensionInCaps = fileExtension.toUpperCase();
@@ -355,22 +354,21 @@ public class BlogController implements Serializable {
                 case "JPEG":
                 case "PNG":
                 case "GIF":
-                    // File is an acceptable image type
-                    break;
+                // File is an acceptable image type
+                break;
                 default:
+                    Methods.showMessage("Fatal Error", "Unrecognized File Type!",
+                        "Selected file type is not a JPG, JPEG, PNG, or GIF!");
+                    }
+            } else {
                     Methods.showMessage("Fatal Error", "Unrecognized File Type!",
                             "Selected file type is not a JPG, JPEG, PNG, or GIF!");
             }
-        } else {
-            Methods.showMessage("Fatal Error", "Unrecognized File Type!",
-                    "Selected file type is not a JPG, JPEG, PNG, or GIF!");
+
+            // If it is an image file, obtain its file extension; otherwise, set png as the file extension anyway.
+            String fileExtension = mimeFileType.startsWith("image/") ? mimeFileType.subSequence(6, mimeFileType.length()).toString() : "png";
+            selected.setExtension(fileExtension);
         }
-
-        System.out.println("3");
-
-        // If it is an image file, obtain its file extension; otherwise, set png as the file extension anyway.
-        String fileExtension = mimeFileType.startsWith("image/") ? mimeFileType.subSequence(6, mimeFileType.length()).toString() : "png";
-        selected.setExtension(fileExtension);
 
         persist(PersistAction.CREATE, "Blog was Successfully Created!");
 
@@ -380,8 +378,16 @@ public class BlogController implements Serializable {
             selected = null;        // Remove selection
             listOfPublishedBlogs = null;      // Invalidate listOfRecipes to trigger re-query.
             listofUserBlogs = null;
+            file = null;
+
+            switch (publish) {
+                case 0 : return "/userBlog/List?faces-redirect=true";
+                case 1 : return  "/blog/List?faces-redirect=true";
+                default: return "/blog/SpillYourThoughts?faces-redirect=false";
+            }
 
         }
+        return "/blog/SpillYourThoughts?faces-redirect=false";
     }
 
     /*
@@ -389,11 +395,11 @@ public class BlogController implements Serializable {
      *   UPDATE Selected Recipe in the Database       *
      ***********************************************
      */
-    public void update() {
+    public String update() {
         Methods.preserveMessages();
 
         // Check if a file is selected
-        if (file.getSize() != 0) {
+        if (file != null && file.getSize() != 0) {
 
             //We need to remove the old file also
 
@@ -407,31 +413,27 @@ public class BlogController implements Serializable {
                 e.printStackTrace();
             }
 
-
-
             /*
-        MIME (Multipurpose Internet Mail Extensions) is a way of identifying files on
-        the Internet according to their nature and format.
+            MIME (Multipurpose Internet Mail Extensions) is a way of identifying files on
+            the Internet according to their nature and format.
 
-        A "Content-type" is simply a header defined in many protocols, such as HTTP, that
-        makes use of MIME types to specify the nature of the file currently being handled.
+            A "Content-type" is simply a header defined in many protocols, such as HTTP, that
+            makes use of MIME types to specify the nature of the file currently being handled.
 
-        Some MIME file types: (See http://www.freeformatter.com/mime-types-list.html)
+            Some MIME file types: (See http://www.freeformatter.com/mime-types-list.html)
 
-            JPEG Image      = image/jpeg or image/jpg
-            PNG image       = image/png
-            GIF image       = image/gif
-            Plain text file = text/plain
-            HTML file       = text/html
-            JSON file       = application/json
+                JPEG Image      = image/jpeg or image/jpg
+                PNG image       = image/png
+                GIF image       = image/gif
+                Plain text file = text/plain
+                HTML file       = text/html
+                JSON file       = application/json
 
-         Some of the MIME type mappings are specified in web.xml
-         */
+             Some of the MIME type mappings are specified in web.xml
+             */
 
             // Obtain the uploaded file's MIME file type
             String mimeFileType = file.getContentType();
-
-            System.out.println("2");
 
             if (mimeFileType.startsWith("image/")) {
                 // The uploaded file is an image file
@@ -460,8 +462,6 @@ public class BlogController implements Serializable {
                         "Selected file type is not a JPG, JPEG, PNG, or GIF!");
             }
 
-            System.out.println("3");
-
             // If it is an image file, obtain its file extension; otherwise, set png as the file extension anyway.
             String fileExtension = mimeFileType.startsWith("image/") ? mimeFileType.subSequence(6, mimeFileType.length()).toString() : "png";
             selected.setExtension(fileExtension);
@@ -470,12 +470,22 @@ public class BlogController implements Serializable {
         persist(PersistAction.UPDATE, "Blog was Successfully Updated!");
 
         if (!JsfUtil.isValidationFailed()) {
+
+            int publish = selected.getPublished() ? 1 : 0;
             // No JSF validation error. The UPDATE operation is successfully performed.
             selected = null;        // Remove selection
             listOfPublishedBlogs = null;     // Invalidate listOfRecipes to trigger re-query.
             listofUserBlogs = null;
+            file = null;
 
+            System.out.println("Redirecting");
+            switch (publish) {
+                case 0 : return  "/userBlog/List?faces-redirect=true";
+                case 1 : return  "/blog/List?faces-redirect=true";
+                default: return  "/userBlog/EditYourThoughts?faces-redirect=false";
+            }
         }
+        return  "/userBlog/EditYourThoughts?faces-redirect=false";
     }
 
     /*
@@ -537,8 +547,7 @@ public class BlogController implements Serializable {
                     an input stream of bytes. It is imported as: import java.io.InputStream;
                     Convert the uploaded file into an input stream of bytes.
                     */
-
-                    if (file.getSize() != 0) {
+                    if (file != null && file.getSize() != 0) {
                         String targetFileName = id + "." + selected.getExtension();
 
                         /*

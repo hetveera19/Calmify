@@ -50,8 +50,8 @@ public final class Constants {
     //--------------------------------
     // To run on your AWS EC2 instance
     //--------------------------------
-    //public static final String FILES_ABSOLUTE_PATH  = "/opt/wildfly/DocRoot/CloudStorage/FileStorage/";
-    //public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/CloudStorage/PhotoStorage/";
+    //public static final String BLOGS_ABSOLUTE_PATH  = "/opt/wildfly/DocRoot/CS5704-Team4-FileStorage/BlogPhotoStorage/";
+    //public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/CS5704-Team4-FileStorage/ProfilePhotoStorage/";
 
     /*
      ---------------------------------
@@ -89,8 +89,8 @@ public final class Constants {
     //-----------------------------------------------------
     // To run on your AWS EC2 instance with your IP address
     //-----------------------------------------------------
-    //public static final String FILES_URI  = "http://34.207.113.52:8080/files/";
-    //public static final String PHOTOS_URI = "http://34.207.113.52:8080/photos/";
+    //public static final String BLOGS_URI  = "http://34.207.113.52:8080/blogphotos/";
+    //public static final String PHOTOS_URI = "http://34.207.113.52:8080/userphotos/";
 
     /* 
     =============================================

@@ -24,7 +24,7 @@
 
         <h:form id="blogCreateForm" class="ui-datatable-data" enctype="multipart/form-data" style="width: 80%; margin-left: 10%;">
             <h:panelGroup id="display" >
-                <p:panelGrid columns="2" columnClasses="panelGridColumn1, panelGridColumn2"
+                <p:panelGrid columns="2" columnClasses="writePanelGridColumn1, panelGridColumn2"
                              rendered="#{blogController.selected != null}">
 
                 <!--
@@ -46,18 +46,20 @@
                     <p:textEditor widgetVar="editor1" id="content" value="#{blogController.selected.content}"
                                   height="300" required="true" requiredMessage="Content is required!"
                                   secure="false">
-                        <span class="ql-formats">
+                        <f:facet name="toolbar">
+                             <span class="ql-formats">
                                 <button class="ql-bold"></button>
                                 <button class="ql-italic"></button>
                                 <button class="ql-underline"></button>
                                 <button class="ql-strike"></button>
                             </span>
-                        <span class="ql-formats">
+                            <span class="ql-formats">
                                 <select class="ql-font"></select>
                                 <select class="ql-size"></select>
                             </span>
-
+                        </f:facet>
                     </p:textEditor>
+
 
                     <p:outputLabel
                             value="Click Choose File to select an existing photo on your computer and then click Upload to upload it"
@@ -68,16 +70,19 @@
                 <div align="center">
 
                     <p:commandButton value="Save" icon="fas fa-save" styleClass="rounded-button"
-                                     ajax="false" actionListener="#{blogController.update()}"
+                                     ajax="false" action="#{blogController.update()}"
                                      update="display,:UseBlogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
                     />
                     &nbsp;&nbsp;
-<!--
-                    <p:commandButton value="Save &amp; Publish" icon="fas fa-save" styleClass="rounded-button"
-                                     ajax="false" actionListener="#{blogController.update(1)}"
-                                     update="display,:blogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
-                    />
--->
+                    <p:button id="backButton" icon="fas fa-arrow-left" styleClass="rounded-button"
+                              outcome="/userBlog/List" value="Go Back" />
+
+                    <!--
+                                        <p:commandButton value="Save &amp; Publish" icon="fas fa-save" styleClass="rounded-button"
+                                                         ajax="false" actionListener="#{blogController.update(1)}"
+                                                         update="display,:blogListForm:datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                        />
+                    -->
                 </div>
             </h:panelGroup>
         </h:form>

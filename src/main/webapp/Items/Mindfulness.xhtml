@@ -21,54 +21,68 @@
     <!-- Create the content for this page below -->
     <ui:define name="editableContent">
         <h:form id="form">
-            <div>
-                <div align="center">
-                    <p:carousel value="#{PodcastController.podcast1}" var="podcast"
-                                responsiveOptions="#{PodcastController.responsiveOptions}">
-                        <f:facet name="header">
-                            <h2>Short Meditations to focus on your inner self</h2>
-                        </f:facet>
-                        <iframe width="30%" height="20%" frameborder="0"
-                                src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
-                    </p:carousel>
+            <p:carousel value="#{PodcastController.podcast1}" var="podcast" numVisible="3" numScroll="3"
+                        responsiveOptions="#{PodcastController.responsiveOptions}">
+                <f:facet name="header">
+                    <h2 align="center">Short Meditations to focus on your inner self</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <iframe frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}" class="video-image"
+                                style="text-align: center;">
+                        </iframe>
+                    </div>
                 </div>
-                <br></br>
-                <br></br>
-                <div align="center">
-                    <p:carousel value="#{PodcastController.podcast2}" var="podcast" numVisible="3" numScroll="3"
-                                responsiveOptions="#{PodcastController.responsiveOptions}">
-                        <f:facet name="header">
-                            <h2>Develop the Positive Psychology</h2>
-                        </f:facet>
-                        <iframe width="30%" height="20%" frameborder="0"
-                                src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
-                    </p:carousel>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{PodcastController.podcast2}" var="podcast" numVisible="3" numScroll="3"
+                        responsiveOptions="#{PodcastController.responsiveOptions}">
+                <f:facet name="header">
+                    <h2 align="center">Develop the Positive Psychology</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <iframe frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}" class="video-image" width="100%"
+                                style="text-align: center;">
+                        </iframe>
+                    </div>
                 </div>
-                <br></br>
-                <br></br>
-                <div align="center">
-                    <p:carousel value="#{PodcastController.podcast3}" var="podcast" numVisible="3" numScroll="3"
-                                responsiveOptions="#{PodcastController.responsiveOptions}">
-                        <f:facet name="header">
-                            <h2>Self Love</h2>
-                        </f:facet>
-                        <iframe width="30%" height="20%" frameborder="0"
-                                src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
-                    </p:carousel>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{PodcastController.podcast3}" var="podcast" numVisible="3" numScroll="3"
+                        responsiveOptions="#{PodcastController.responsiveOptions}">
+                <f:facet name="header">
+                    <h2 align="center">Self Love</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <iframe frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}" class="video-image" width="90%"
+                                style="text-align: center;">
+                        </iframe>
+                    </div>
                 </div>
-                <br></br>
-                <br></br>
-                <div align="center">
-                    <p:carousel value="#{PodcastController.podcast4}" var="podcast" numVisible="3" numScroll="3"
-                                responsiveOptions="#{PodcastController.responsiveOptions}">
-                        <f:facet name="header">
-                            <h2>Calmer You</h2>
-                        </f:facet>
-                        <iframe width="30%" height="20%" frameborder="0"
-                                src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
-                    </p:carousel>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{PodcastController.podcast4}" var="podcast" numVisible="3" numScroll="3"
+                        responsiveOptions="#{PodcastController.responsiveOptions}">
+                <f:facet name="header">
+                    <h2 align="center">Calmer You</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <iframe frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}" class="video-image" width="80%"
+                                style="text-align: center;">
+                        </iframe>
+                    </div>
                 </div>
-            </div>
+            </p:carousel>
         </h:form>
     </ui:define>
 </ui:composition>

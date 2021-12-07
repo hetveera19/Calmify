@@ -33,6 +33,7 @@
 
             <div align="center">
                 <p:card>
+                    <h2>Recent Musings</h2>
                     <h:form id="UserBlogListForm">
                         <p:dataScroller value="#{blogController.listOfUserBlogs}" id ="userBlogList" widgetVar="userBlogTable" var="aBlog" chunkSize="10">
                             <p:panel style="text-align:left" >
@@ -47,49 +48,48 @@
                                         <p:rating readonly="true" value="#{blogController.getBlogRating(aBlog.id)}" rendered="#{blogController.getBlogRating(aBlog.id) != 0}"/>
                                     </h:panelGrid>
 
-                                    <p:commandLink value="Read More" styleClass="button" update=":blogDetailsForm,:CommentListForm"
-                                                   oncomplete="PF('blogDetailsDialog').show()"
-                                                   action="#{commentController.prepareCreate}"
+                                    <h:panelGrid style="width:100%; margin-left:10px">
+                                        <p:commandLink value="Read More" styleClass="button" update=":blogDetailsForm,:CommentListForm"
+                                                   oncomplete="PF('blogDetailsDialog').show()" style="color: #FFFFFF"
                                                    title="Read More">
 
-                                        <!--
-                                        When the Info Icon is clicked on (selected), the apiSearchController.selected method
-                                        is invoked to set the selected current recipe object to the aSearchedRecipe object.
-                                        -->
-                                        <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
-                                    </p:commandLink>
+                                            <!--
+                                            When the Info Icon is clicked on (selected), the apiSearchController.selected method
+                                            is invoked to set the selected current recipe object to the aSearchedRecipe object.
+                                            -->
+                                            <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
+                                        </p:commandLink>
 
-                                    <p:commandLink value="Publish" styleClass="button" update=":blogDetailsForm,:CommentListForm"
-                                                   action="#{blogController.publish(aBlog.id)}" rendered="#{blogController.isPublished(aBlog.id) == false}"
-                                                   title="Publish">
+                                        <p:commandButton id="publishButton" value="Publish" icon="fas fa-share" styleClass="button"
+                                                         actionListener="#{blogController.publish(aBlog.id)}" rendered="#{blogController.isPublished(aBlog.id) == false}"
+                                                         update="userBlogList,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                        />
 
-                                        <!--
-                                        When the Info Icon is clicked on (selected), the apiSearchController.selected method
-                                        is invoked to set the selected current recipe object to the aSearchedRecipe object.
-                                        -->
-                                        <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
-                                    </p:commandLink>
+                                        <p:commandButton id="editButton" value="Edit" icon="fas fa-edit" styleClass="button"
+                                                         action="#{blogController.prepareEdit(aBlog.id)}"
+                                                         update="userBlogList,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                        />
 
-                                    <p:commandLink value="Edit" styleClass="button" update=":UserBlogListForm"
-                                                   action="#{blogController.prepareEdit}" title="Edit">
-                                        <!--
-                                        When the Info Icon is clicked on (selected), the apiSearchController.selected method
-                                        is invoked to set the selected current recipe object to the aSearchedRecipe object.
-                                        -->
-                                        <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
-                                    </p:commandLink>
+                                        <!-- ***************************************************
+                                            Display a Confirmation dialog for the DELETE button
+                                            id is used since it is referenced to be activated or not
+                                        **************************************************** -->
+                                        <p:commandButton id="deleteButton" value="Delete" icon="fas fa-trash-alt"  styleClass="button"
+                                                         actionListener="#{blogController.destroy(aBlog.id)}"
+                                                         update="userBlogList,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                        >
+                                            <p:confirm header="Deletion Confirmation"
+                                                       message="Are you sure you want to permanently delete the selected blog from the database?"/>
+                                        </p:commandButton>
 
-                                    <!-- ***************************************************
-                                        Display a Confirmation dialog for the DELETE button
-                                        id is used since it is referenced to be activated or not
-                                    **************************************************** -->
-                                    <p:commandButton id="deleteButton" value="Delete" icon="fas fa-trash-alt"  styleClass="button"
-                                                     actionListener="#{blogController.destroy(aBlog.id)}"
-                                                     update="userBlogList,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
-                                    >
-                                    </p:commandButton>
-
-
+                                        <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                            <div align="center">
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                                &nbsp;
+                                                <p:commandButton value="Yes" type="button" class="ui-confirmdialog-yes ui-button-danger" icon="fas fa-check-square" />
+                                            </div>
+                                        </p:confirmDialog>
+                                    </h:panelGrid>
                                 </h:panelGrid>
                             </p:panel>
                         </p:dataScroller>
@@ -102,7 +102,7 @@
             Create.xhtml file in a dialog window on top of this page.
             -->
 
-            <ui:include src="/blog/BlogDetails.xhtml"/>
+            <ui:include src="/userBlog/BlogDetails.xhtml"/>
 
 
         </ui:define>
