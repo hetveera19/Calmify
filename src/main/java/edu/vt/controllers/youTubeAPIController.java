@@ -1,4 +1,4 @@
-package edu.vt.controllers.util;
+package edu.vt.controllers;
 import java.net.URL;
 
 import edu.vt.EntityBeans.youTubeVideos;

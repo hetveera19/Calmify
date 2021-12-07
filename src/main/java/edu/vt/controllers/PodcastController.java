@@ -1,4 +1,4 @@
-package edu.vt.controllers.util;
+package edu.vt.controllers;
 
 import edu.vt.EntityBeans.podcast;
 import org.primefaces.model.ResponsiveOption;

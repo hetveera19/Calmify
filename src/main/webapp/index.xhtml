@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Created by Osman Balci on 2021.11.4
+  - Created by Osman Balci on 2021.11.11
   - Copyright © 2021 Osman Balci. All rights reserved.
   -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-
-<!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
 <!-- This page is constructed based on the siteTemplate -->
 <ui:composition template="/template/siteTemplate.xhtml">
@@ -47,10 +43,7 @@
 
     <!-- Create the content for this page below -->
     <ui:define name="editableContent">
-        <blockquote><h:outputText value="#{quoteController.getQuote()}"/></blockquote>
-
         <div class="card" align="center">
-
             <!--
             ========================================
             |   PrimeFaces Galleria Image Slider   |
@@ -71,12 +64,11 @@
             <p:galleria value="#{galleriaManager.listOfPhotos}" var="aPhoto"
                         responsiveOptions="#{galleriaManager.responsiveOptions1}"
                         circular="true" autoPlay="true" transitionInterval="4000"
-                        showThumbnails="false" showIndicators="true" style="max-width: 1920px">
+                        showThumbnails="false" showIndicators="true" style="max-width: 800px">
 
-                <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width:100%; display: block;" />
+                <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
             </p:galleria>
         </div>
-
     </ui:define>
 </ui:composition>
 </html>

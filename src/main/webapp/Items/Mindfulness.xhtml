@@ -3,7 +3,8 @@
   - Created by Anshika Tyagi on 2021.10.18
   - Copyright © 2021 Anshika Tyagi. All rights reserved.
   -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
@@ -14,58 +15,62 @@
 <ui:composition template="/template/siteTemplate.xhtml">
     <ui:define name="title">
         <!-- Set the page title -->
-        <h:outputText value="Experience Mindfulness" />
+        <h:outputText value="Experience Mindfulness"/>
     </ui:define>
 
     <!-- Create the content for this page below -->
     <ui:define name="editableContent">
         <h:form id="form">
-        <div>
-            <div align="center">
-            <p:carousel value="#{PodcastController.podcast1}" var="podcast"
-                        responsiveOptions="#{PodcastController.responsiveOptions}">
-                <f:facet name="header">
-                    <h2>Short Meditations to  focus on your inner self</h2>
-                </f:facet>
-                <iframe width="30%" height="20%" frameborder="0" src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
-            </p:carousel>
+            <div>
+                <div align="center">
+                    <p:carousel value="#{PodcastController.podcast1}" var="podcast"
+                                responsiveOptions="#{PodcastController.responsiveOptions}">
+                        <f:facet name="header">
+                            <h2>Short Meditations to focus on your inner self</h2>
+                        </f:facet>
+                        <iframe width="30%" height="20%" frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
+                    </p:carousel>
+                </div>
+                <br></br>
+                <br></br>
+                <div align="center">
+                    <p:carousel value="#{PodcastController.podcast2}" var="podcast" numVisible="3" numScroll="3"
+                                responsiveOptions="#{PodcastController.responsiveOptions}">
+                        <f:facet name="header">
+                            <h2>Develop the Positive Psychology</h2>
+                        </f:facet>
+                        <iframe width="30%" height="20%" frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
+                    </p:carousel>
+                </div>
+                <br></br>
+                <br></br>
+                <div align="center">
+                    <p:carousel value="#{PodcastController.podcast3}" var="podcast" numVisible="3" numScroll="3"
+                                responsiveOptions="#{PodcastController.responsiveOptions}">
+                        <f:facet name="header">
+                            <h2>Self Love</h2>
+                        </f:facet>
+                        <iframe width="30%" height="20%" frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
+                    </p:carousel>
+                </div>
+                <br></br>
+                <br></br>
+                <div align="center">
+                    <p:carousel value="#{PodcastController.podcast4}" var="podcast" numVisible="3" numScroll="3"
+                                responsiveOptions="#{PodcastController.responsiveOptions}">
+                        <f:facet name="header">
+                            <h2>Calmer You</h2>
+                        </f:facet>
+                        <iframe width="30%" height="20%" frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
+                    </p:carousel>
+                </div>
             </div>
-            <br></br>
-            <br></br>
-            <div align="center">
-         <p:carousel value="#{PodcastController.podcast2}" var="podcast" numVisible="3" numScroll="3"
-            responsiveOptions="#{PodcastController.responsiveOptions}">
-    <f:facet name="header">
-        <h2>Develop the Positive Psychology</h2>
-    </f:facet>
-    <iframe width="30%" height="20%" frameborder="0" src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
-</p:carousel>
-            </div>
-            <br></br>
-            <br></br>
-            <div align="center">
-<p:carousel value="#{PodcastController.podcast3}" var="podcast" numVisible="3" numScroll="3"
-            responsiveOptions="#{PodcastController.responsiveOptions}">
-    <f:facet name="header">
-        <h2>Self Love</h2>
-    </f:facet>
-    <iframe width="30%" height="20%" frameborder="0" src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
-</p:carousel>
-            </div>
-            <br></br>
-            <br></br>
-            <div align="center">
-                <p:carousel value="#{PodcastController.podcast4}" var="podcast" numVisible="3" numScroll="3"
-                            responsiveOptions="#{PodcastController.responsiveOptions}">
-                    <f:facet name="header">
-                        <h2>Calmer You</h2>
-                    </f:facet>
-                    <iframe width="30%" height="20%" frameborder="0" src="https://embed.radiopublic.com/e?if=#{podcast.src}"></iframe>
-                </p:carousel>
-            </div>
-</div>
-</h:form>
-</ui:define>
+        </h:form>
+    </ui:define>
 </ui:composition>
 <!-- Do not enter tags after the composition line since they are ignored by JSF -->
 </html>

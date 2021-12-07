@@ -12,6 +12,22 @@
 
 <!-- This page is constructed based on the siteTemplate -->
 <ui:composition template="/template/siteTemplate.xhtml">
+
+    <style type="text/css">
+        .video-item .video-item-content {
+            border: 1px solid var(--surface-d);
+            border-radius: 3px;
+            margin: .3rem;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .video-item .video-image {
+            width: 50%;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+        }
+    </style>
+
     <ui:define name="title">
         <!-- Set the page title -->
         <h:outputText value="Improve Focus" />
@@ -20,33 +36,37 @@
     <!-- Create the content for this page below -->
     <ui:define name="editableContent">
         <h:form id="form">
-            <div align="center">
-                <p:carousel value="#{youTubeAPIController.getVideo(1)}" var="avideo"  circular="true" autoPlayInterval="20000" effect="easeInStrong" responsiveOptions="#{PodcastController.responsiveOptions}">
+                <p:carousel value="#{youTubeAPIController.getVideo(1)}" var="avideo" circular="true"
+                            autoPlayInterval="20000" effect="easeInStrong"
+                            responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
                     <f:facet name="header">
                         <h2>Talks that can change your life</h2>
                     </f:facet>
-                    <div align="center">
-                    <div align="center">
-                    <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" />
-                    </div>
-                        <br></br>
-                <div align="center">
-                    <p:commandButton id="playButton1" value="Play" icon="fas fa-play" styleClass="rounded-button" actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
-                                     update=":MovieTrailerPlayForm" oncomplete="PF('MovieTrailerPlayDialog').show()"/>
-                </div>
+                    <div class="video-item">
+                        <div class="video-item-content">
+                                <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" styleClass="video-image" width="70%" style="text-align: center;margin-left: 15%;"/>
+                            <br></br>
+                            <div align="center">
+                                <p:commandButton id="playButton1" value="Play" icon="fas fa-play"
+                                                 styleClass="rounded-button"
+                                                 actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
+                                                 update=":MovieTrailerPlayForm"
+                                                 oncomplete="PF('MovieTrailerPlayDialog').show()"/>
+                            </div>
+                        </div>
                     </div>
                 </p:carousel>
-            </div>
-                <br></br>
+            <br></br>
                 <br></br>
             <div align="center">
-                <p:carousel value="#{youTubeAPIController.getVideo(2)}" responsiveOptions="#{PodcastController.responsiveOptions}"  var="avideo"   circular="true"  autoPlayInterval="20000" effect="easeInStrong">
+                <p:carousel value="#{youTubeAPIController.getVideo(2)}" var="avideo"   circular="true"  autoPlayInterval="20000" effect="easeInStrong"
+                            responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
                     <f:facet name="header">
                         <h2>Keep your Mind Relaxed and Calm</h2>
                     </f:facet>
                     <div align="center">
                         <div align="center">
-                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" />
+                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" styleClass="video-image" width="70%" style="text-align: center;margin-left: 15%;"/>
                         </div>
                         <br></br>
                         <div align="center">
@@ -59,13 +79,14 @@
                 <br></br>
                 <br></br>
             <div align="center">
-                <p:carousel value="#{youTubeAPIController.getVideo(3)}" responsiveOptions="#{PodcastController.responsiveOptions}" var="avideo"  circular="true" autoPlayInterval="20000" effect="easeInStrong">
-                    <f:facet name="header">
+                <p:carousel value="#{youTubeAPIController.getVideo(3)}" var="avideo"  circular="true" autoPlayInterval="20000" effect="easeInStrong"
+                            responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
                         <h2>Nature as a Healer</h2>
                     </f:facet>
                     <div align="center">
                         <div align="center">
-                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" />
+                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" styleClass="video-image" width="70%" style="text-align: center;margin-left: 15%;"/>
                         </div>
                         <br></br>
                         <div align="center">
@@ -78,13 +99,14 @@
                 <br></br>
                 <br></br>
             <div align="center">
-                <p:carousel value="#{youTubeAPIController.getVideo(4)}" responsiveOptions="#{PodcastController.responsiveOptions}" var="avideo"  circular="true" autoPlayInterval="20000" effect="easeInStrong">
-                    <f:facet name="header">
+                <p:carousel value="#{youTubeAPIController.getVideo(4)}" var="avideo"  circular="true" autoPlayInterval="20000" effect="easeInStrong"
+                            responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
                         <h2>Be your own Life Coach</h2>
                     </f:facet>
                     <div align="center">
                         <div align="center">
-                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" />
+                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" styleClass="video-image" width="70%" style="text-align: center;margin-left: 15%;"/>
                         </div>
                         <br></br>
                         <div align="center">
@@ -97,13 +119,14 @@
                 <br></br>
                 <br></br>
             <div align="center">
-                <p:carousel value="#{youTubeAPIController.getVideo(5)}" responsiveOptions="#{PodcastController.responsiveOptions}" var="avideo"  circular="true" numVisible="3" numScroll="3" autoPlayInterval="20000" effect="easeInStrong">
-                    <f:facet name="header">
+                <p:carousel value="#{youTubeAPIController.getVideo(5)}" var="avideo"  circular="true" autoPlayInterval="20000" effect="easeInStrong"
+                            responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
                         <h2>Oddly Satisfying trends for your Dopamine</h2>
                     </f:facet>
                     <div align="center">
                         <div align="center">
-                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" />
+                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" styleClass="video-image" width="70%" style="text-align: center;margin-left: 15%;"/>
                         </div>
                         <br></br>
                         <div align="center">
@@ -116,13 +139,14 @@
                 <br></br>
                 <br></br>
             <div align="center">
-                <p:carousel value="#{youTubeAPIController.getVideo(6)}" responsiveOptions="#{PodcastController.responsiveOptions}" var="avideo"  circular="true" autoPlayInterval="20000" effect="easeInStrong">
-                    <f:facet name="header">
+                <p:carousel value="#{youTubeAPIController.getVideo(6)}" var="avideo"  circular="true" autoPlayInterval="20000" effect="easeInStrong"
+                            responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
                         <h2>Feel the Positive Energy</h2>
                     </f:facet>
                     <div align="center">
                         <div align="center">
-                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" />
+                            <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg" styleClass="video-image" width="70%" style="text-align: center;margin-left: 15%;"/>
                         </div>
                         <br></br>
                         <div align="center">

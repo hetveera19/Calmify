@@ -6,7 +6,6 @@
 package edu.vt.galleria;
 
 import org.primefaces.model.ResponsiveOption;
-
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;

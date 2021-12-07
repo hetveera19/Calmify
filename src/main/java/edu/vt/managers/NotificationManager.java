@@ -45,7 +45,7 @@ public class NotificationManager {
 
         String quoteJson = "https://zenquotes.io/api/today/";
 
-        String imageUrl = "<img src=\"https://email-assets.calm.com/Content/Holiday/2020/Breathe-Bubble/Breathe_EN.gif\" style=\"line-height:100%;border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px\" width=\"325\">";
+        String imageUrl = "<img src=\"https://email-assets.calm.com/Content/Holiday/2020/Breathe-Bubble/Breathe_EN.gif\">";
 
         // Obtain the JSON file (String of characters) containing the search results
         // The readUrlContent() method is given below
