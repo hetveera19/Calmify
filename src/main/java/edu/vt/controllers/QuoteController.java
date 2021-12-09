@@ -1,3 +1,9 @@
+/*
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
+ */
+
 package edu.vt.controllers;
 
 
@@ -43,11 +49,10 @@ public class QuoteController implements Serializable{
 
             return q+"-"+a;
         } catch (Exception ex) {
-            Methods.showMessage("Information", "No Results!", "No recipe found for the search query!");
+            System.out.println(ex.getStackTrace());
         }
         return null;
     }
-
 
     public String readUrlContent(String apiURL) throws Exception {
         /*

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Created by Anubhav Nanda on 2021.10.29
-  - Copyright © 2021 Anubhav Nanda. All rights reserved.
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
   -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -16,8 +17,8 @@
 
     <!--
     ==========================================================
-    |  Clicking the INFO button displays this Dialog window  |
-    |  to show the Details of the Selected Searched Recipe.  |
+    |  Clicking the Read More button displays this Dialog    |
+    |  window to show the Details of the Selected blog.      |
     ==========================================================
     -->
     <p:dialog id="blogDetailsDialog" header="View Blog" widgetVar="blogDetailsDialog"
@@ -32,7 +33,7 @@
             <h:form id="blogDetailsForm" class="ui-datatable-data">
                 <div align="center">
                     <h:panelGroup id="display">
-                        <!-- Display the selected recipe's photo -->
+                        <!-- Display the selected blog's title -->
                         <h:outputText value="#{blogController.selected.title}" style="color: maroon"/>
                         <br /><br />
                         <div align="justify">
@@ -51,7 +52,7 @@
                         <p:panel style="text-align:left" >
                             <h:panelGrid columns="2" style="width:100%"
                                          columnClasses="columnBlogImage, columnMiddlePart ">
-                                <p:graphicImage url="#{commentController.userPhoto(aComment.user.id)}" width="92px" styleClass="smallProfilePhoto" style="float:left" />
+                                <p:graphicImage url="#{commentController.userPhoto(aComment.user.id)}" width="92px" style="float:left" />
                                 <h:panelGrid style="width:100%; margin-left:10px">
                                     <h:outputText value="#{aComment.user.firstName}" />
                                     <h:outputText value="#{commentController.publicationDay(aComment.publicationDate)}" />

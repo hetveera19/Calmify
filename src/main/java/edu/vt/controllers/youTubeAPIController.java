@@ -1,3 +1,9 @@
+/*
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
+ */
+
 package edu.vt.controllers;
 import java.net.URL;
 
@@ -36,22 +42,22 @@ public class youTubeAPIController implements Serializable {
         String videoAPI = "";
         try {
             if (num == 1) {
-                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=tedx+motivational+speeches&safeSearch=strict&key=AIzaSyBeW4bjvchrZWfXDzRZqVsvcCrbObeP4jU";
+                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=tedx+motivational+speeches&safeSearch=strict&key="+Constants.YOUTUBE_API_KEY;
             }
             if (num == 2) {
-                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=relaxing+videos+for+anxiety&safeSearch=strict&key=AIzaSyBeW4bjvchrZWfXDzRZqVsvcCrbObeP4jU";
+                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=relaxing+videos+for+anxiety&safeSearch=strict&key="+Constants.YOUTUBE_API_KEY;
             }
             if (num == 3) {
-                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=short+calming+nature+video&safeSearch=strict&key=AIzaSyBeW4bjvchrZWfXDzRZqVsvcCrbObeP4jU";
+                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=short+calming+nature+video&safeSearch=strict&key="+Constants.YOUTUBE_API_KEY;
             }
             if (num == 4) {
-                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=i+can+do+it+motivational+video&safeSearch=strict&key=AIzaSyBeW4bjvchrZWfXDzRZqVsvcCrbObeP4jU";
+                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=i+can+do+it+motivational+video&safeSearch=strict&key="+Constants.YOUTUBE_API_KEY;
             }
             if (num == 5) {
-                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=oddly+satisfying&safeSearch=strict&key=AIzaSyBeW4bjvchrZWfXDzRZqVsvcCrbObeP4jU";
+                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=oddly+satisfying&safeSearch=strict&key="+Constants.YOUTUBE_API_KEY;
             }
             if (num == 6) {
-                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=positive+energy+guides&safeSearch=strict&key=AIzaSyBeW4bjvchrZWfXDzRZqVsvcCrbObeP4jU";
+                videoAPI = "https://youtube.googleapis.com/youtube/v3/search?maxResults=9&order=relevance&q=positive+energy+guides&safeSearch=strict&key="+Constants.YOUTUBE_API_KEY;
             }
 
             // Obtain the JSON file (String of characters) containing the search results
@@ -85,8 +91,8 @@ public class youTubeAPIController implements Serializable {
                 if(num==6)
                     Constants.youTube6 = JsonData;
             }
-                // Create a new JSON array from the returned file
-                JSONObject JsonObject = new JSONObject(JsonData);
+            // Create a new JSON array from the returned file
+            JSONObject JsonObject = new JSONObject(JsonData);
             JSONArray items = JsonObject.getJSONArray("items");
 
             int index = 0;
@@ -101,12 +107,10 @@ public class youTubeAPIController implements Serializable {
             }
 
         } catch (Exception ex) {
-            Methods.showMessage("Information", "No Results!", "");
+            System.out.println(ex.getStackTrace());
         }
         return videoList;
-
-
-}
+    }
 
 
     public String readUrlContent(String apiURL) throws Exception {

@@ -1,6 +1,7 @@
 /*
- * Created by Anubhav Nanda on 2021.10.29
- * Copyright © 2021 Anubhav Nanda. All rights reserved.
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
  */
 package edu.vt.controllers;
 
@@ -38,7 +39,7 @@ import java.util.logging.Logger;
 ---------------------------------------------------------------------------
 The @Named (javax.inject.Named) annotation indicates that the objects
 instantiated from this class will be managed by the Contexts and Dependency
-Injection (CDI) container. The name "recipeController" is used within
+Injection (CDI) container. The name "blogController" is used within
 Expression Language (EL) expressions in JSF (XHTML) facelets pages to
 access the properties and invoke methods of this class.
 ---------------------------------------------------------------------------
@@ -46,7 +47,7 @@ access the properties and invoke methods of this class.
 @Named("blogController")
 
 /*
-The @SessionScoped annotation preserves the values of the recipeController
+The @SessionScoped annotation preserves the values of the blogController
 object's instance variables across multiple HTTP request-response cycles
 as long as the user's established HTTP session is alive.
  */
@@ -54,7 +55,7 @@ as long as the user's established HTTP session is alive.
 
 /*
 -----------------------------------------------------------------------------
-Marking the RecipeController class as "implements Serializable" implies that
+Marking the BlogController class as "implements Serializable" implies that
 instances of the class can be automatically serialized and deserialized.
 
 Serialization is the process of converting a class instance (object)
@@ -74,7 +75,7 @@ public class BlogController implements Serializable {
 
     /*
     The @EJB annotation directs the EJB Container Manager to inject (store) the object reference of the
-    RecipeFacade bean into the instance variable 'recipeFacade' after it is instantiated at runtime.
+    BlogFacade bean into the instance variable 'blogFacade' after it is instantiated at runtime.
      */
     @EJB
     private BlogFacade blogFacade;
@@ -82,15 +83,15 @@ public class BlogController implements Serializable {
     @EJB
     private CommentFacade commentFacade;
 
-    // List of object references of Recipe objects
+    // List of object references of Blog objects
     private List<Blog> listOfPublishedBlogs = null;
 
     private List<Blog> listofUserBlogs = null;
 
-    // selected = object reference of a selected Recipe object
+    // selected = object reference of a selected Blog object
     private Blog selected;
 
-    // Flag indicating if recipe data changed or not
+    // Flag indicating if blog data changed or not
     private Boolean blogDataChanged;
 
     private double blogRating = 0;
@@ -156,6 +157,14 @@ public class BlogController implements Serializable {
         return (int) blogRating;
     }
 
+    public String filePresent(String extension)
+    {
+        if(extension.length() != 0)
+            return "File already present, Click Choose File to replace";
+        else
+            return "Click Choose File to select an existing photo on your computer";
+    }
+
     public String getFilename() {
         return filename;
     }
@@ -181,7 +190,7 @@ public class BlogController implements Serializable {
 
     /*
      ****************************************
-     *   Unselect Selected Recipe Object   *
+     *   Unselect Selected Blog Object   *
      ****************************************
      */
     public void unselect() {
@@ -194,7 +203,7 @@ public class BlogController implements Serializable {
      *************************************
      */
     public String cancel() {
-        // Unselect previously selected recipe object if any
+        // Unselect previously selected cart object if any
         selected = null;
         return "/blog/List?faces-redirect=true";
     }
@@ -224,7 +233,6 @@ public class BlogController implements Serializable {
         initializeSessionMap() method in LoginManager upon user's sign in.
         If there is a username, that means, there is a signed-in user.
          */
-        System.out.println(id);
         Blog blog = blogFacade.find(id);
         return blog.getPublished();
     }
@@ -233,22 +241,19 @@ public class BlogController implements Serializable {
         Methods.preserveMessages();
 
         /*
-        Instantiate a new Recipe object and store its object reference into
-        instance variable 'selected'. The Recipe class is defined in Recipe.java
+        Instantiate a new Blog object and store its object reference into
+        instance variable 'selected'. The Blog class is defined in Blog.java
          */
         System.out.println("In Prepare publish");
         selected = blogFacade.find(id);
-        System.out.println(selected.getId());
         selected.setPublished(true);
 
         persist(PersistAction.UPDATE, "Blog Successfully Published!");
 
-        System.out.println("Test");
-
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The UPDATE operation is successfully performed.
             selected = null;        // Remove selection
-            listOfPublishedBlogs = null;     // Invalidate listOfRecipes to trigger re-query.
+            listOfPublishedBlogs = null;     // Invalidate listOfPublishedBlogs to trigger re-query.
             listofUserBlogs = null;
         }
 
@@ -257,13 +262,13 @@ public class BlogController implements Serializable {
 
     /*
      ***************************************
-     *   Prepare to Create a New Recipe    *
+     *   Prepare to Create a New Blog      *
      ***************************************
      */
     public String prepareCreate() {
         /*
-        Instantiate a new Recipe object and store its object reference into
-        instance variable 'selected'. The Recipe class is defined in Recipe.java
+        Instantiate a new Blog object and store its object reference into
+        instance variable 'selected'. The Blog class is defined in Blog.java
          */
         System.out.println("In Prepare Create");
         selected = new Blog();
@@ -310,7 +315,6 @@ public class BlogController implements Serializable {
         selected.setUser(signedInUser);
         selected.setPublicationDate(new Date());
         selected.setPublished(published);
-        System.out.println(published);
 
         // Check if a file is selected
         if (file != null && file.getSize() != 0) {
@@ -376,7 +380,7 @@ public class BlogController implements Serializable {
 
             // No JSF validation error. The CREATE operation is successfully performed.
             selected = null;        // Remove selection
-            listOfPublishedBlogs = null;      // Invalidate listOfRecipes to trigger re-query.
+            listOfPublishedBlogs = null;      // Invalidate listOfPublishedBlogs to trigger re-query.
             listofUserBlogs = null;
             file = null;
 
@@ -392,7 +396,7 @@ public class BlogController implements Serializable {
 
     /*
      ***********************************************
-     *   UPDATE Selected Recipe in the Database       *
+     *   UPDATE Selected Blog in the Database       *
      ***********************************************
      */
     public String update() {
@@ -474,11 +478,10 @@ public class BlogController implements Serializable {
             int publish = selected.getPublished() ? 1 : 0;
             // No JSF validation error. The UPDATE operation is successfully performed.
             selected = null;        // Remove selection
-            listOfPublishedBlogs = null;     // Invalidate listOfRecipes to trigger re-query.
+            listOfPublishedBlogs = null;     // Invalidate listOfPublishedBlogs to trigger re-query.
             listofUserBlogs = null;
             file = null;
 
-            System.out.println("Redirecting");
             switch (publish) {
                 case 0 : return  "/userBlog/List?faces-redirect=true";
                 case 1 : return  "/blog/List?faces-redirect=true";
@@ -490,20 +493,19 @@ public class BlogController implements Serializable {
 
     /*
      ***********************************************
-     *   DELETE Selected Recipe in the Database       *
+     *   DELETE Selected Blog in the Database       *
      ***********************************************
      */
     public void destroy(int id) {
         Methods.preserveMessages();
 
         selected = blogFacade.find(id);
-        System.out.println(selected.getId());
         persist(PersistAction.DELETE, "Blog was Successfully Deleted!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The DELETE operation is successfully performed.
             selected = null;        // Remove selection
-            listOfPublishedBlogs = null;     // Invalidate listOfRecipes to trigger re-query.
+            listOfPublishedBlogs = null;     // Invalidate listOfPublishedBlogs to trigger re-query.
             listofUserBlogs = null;
 
         }
@@ -520,7 +522,6 @@ public class BlogController implements Serializable {
      * @param successMessage displayed to inform the user about the result
      */
     private void persist(PersistAction persistAction, String successMessage) {
-        System.out.println(selected.toString());
         if (selected != null) {
             try {
                 if (persistAction != PersistAction.DELETE) {
@@ -532,7 +533,7 @@ public class BlogController implements Serializable {
                      object in the database regardless of whether the object is a newly
                      created object (CREATE) or an edited (updated) object (EDIT or UPDATE).
 
-                     RecipeFacade inherits the edit(selected) method from the AbstractFacade class.
+                     Blog inherits the edit(selected) method from the AbstractFacade class.
                      */
                     int id;
                     if (persistAction == PersistAction.CREATE) {
@@ -570,7 +571,7 @@ public class BlogController implements Serializable {
                      The remove(selected) method performs the DELETE operation of the "selected"
                      object in the database.
 
-                     RecipeFacade inherits the remove(selected) method from the AbstractFacade class.
+                     BlogFacade inherits the remove(selected) method from the AbstractFacade class.
                      */
                     String targetFileName = Constants.BLOGS_ABSOLUTE_PATH + selected.getId() + "." + selected.getExtension();
                     Files.deleteIfExists(Paths.get(targetFileName));

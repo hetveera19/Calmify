@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Created by Anshika Tyagi on 2021.10.18
-  - Copyright © 2021 Anshika Tyagi. All rights reserved.
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
   -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -23,7 +24,7 @@
     <ui:define name="editableContent">
         <h:form id="form">
             <p:carousel value="#{youTubeAPIController.getVideo(1)}" var="avideo" circular="true"
-                        autoPlayInterval="20000" effect="easeInStrong"
+                        autoplayInterval="20000" effect="easeInStrong"
                         responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
                 <f:facet name="header">
                     <h2 align="center">Talks that can change your life</h2>
@@ -38,8 +39,8 @@
                             <p:commandButton id="playButton1" value="Play" icon="fas fa-play"
                                              styleClass="rounded-button"
                                              actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
-                                             update=":MovieTrailerPlayForm"
-                                             oncomplete="PF('MovieTrailerPlayDialog').show()"/>
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
                         </div>
                     </div>
                 </div>
@@ -47,7 +48,7 @@
             <br></br>
             <br></br>
             <p:carousel value="#{youTubeAPIController.getVideo(2)}" var="avideo" circular="true"
-                        autoPlayInterval="20000" effect="easeInStrong"
+                        autoplayInterval="20000" effect="easeInStrong"
                         responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
                 <f:facet name="header">
                     <h2 align="center">Keep your Mind Relaxed and Calm</h2>
@@ -62,8 +63,8 @@
                             <p:commandButton id="playButton2" value="Play" icon="fas fa-play"
                                              styleClass="rounded-button"
                                              actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
-                                             update=":MovieTrailerPlayForm"
-                                             oncomplete="PF('MovieTrailerPlayDialog').show()"/>
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
                         </div>
                     </div>
                 </div>
@@ -71,7 +72,7 @@
             <br></br>
             <br></br>
             <p:carousel value="#{youTubeAPIController.getVideo(3)}" var="avideo" circular="true"
-                        autoPlayInterval="20000" effect="easeInStrong"
+                        autoplayInterval="20000" effect="easeInStrong"
                         responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
                 <f:facet name="header">
                     <h2 align="center">Nature as a Healer</h2>
@@ -86,8 +87,8 @@
                             <p:commandButton id="playButton3" value="Play" icon="fas fa-play"
                                              styleClass="rounded-button"
                                              actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
-                                             update=":MovieTrailerPlayForm"
-                                             oncomplete="PF('MovieTrailerPlayDialog').show()"/>
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
                         </div>
                     </div>
                 </div>
@@ -95,7 +96,7 @@
             <br></br>
             <br></br>
             <p:carousel value="#{youTubeAPIController.getVideo(4)}" var="avideo" circular="true"
-                        autoPlayInterval="20000" effect="easeInStrong"
+                        autoplayInterval="20000" effect="easeInStrong"
                         responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
                 <f:facet name="header">
                     <h2 align="center">Be your own Life Coach</h2>
@@ -110,8 +111,8 @@
                             <p:commandButton id="playButton4" value="Play" icon="fas fa-play"
                                              styleClass="rounded-button"
                                              actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
-                                             update=":MovieTrailerPlayForm"
-                                             oncomplete="PF('MovieTrailerPlayDialog').show()"/>
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
                         </div>
                     </div>
                 </div>
@@ -119,7 +120,7 @@
             <br></br>
             <br></br>
             <p:carousel value="#{youTubeAPIController.getVideo(5)}" var="avideo" circular="true"
-                        autoPlayInterval="20000" effect="easeInStrong"
+                        autoplayInterval="20000" effect="easeInStrong"
                         responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
                 <f:facet name="header">
                     <h2 align="center">Oddly Satisfying trends for your Dopamine</h2>
@@ -134,8 +135,8 @@
                             <p:commandButton id="playButton5" value="Play" icon="fas fa-play"
                                              styleClass="rounded-button"
                                              actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
-                                             update=":MovieTrailerPlayForm"
-                                             oncomplete="PF('MovieTrailerPlayDialog').show()"/>
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
                         </div>
                     </div>
                 </div>
@@ -143,7 +144,7 @@
             <br></br>
             <br></br>
             <p:carousel value="#{youTubeAPIController.getVideo(6)}" var="avideo" circular="true"
-                        autoPlayInterval="20000" effect="easeInStrong"
+                        autoplayInterval="20000" effect="easeInStrong"
                         responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
                 <f:facet name="header">
                     <h2 align="center">Feel the Positive Energy</h2>
@@ -158,8 +159,8 @@
                             <p:commandButton id="playButton6" value="Play" icon="fas fa-play"
                                              styleClass="rounded-button"
                                              actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
-                                             update=":MovieTrailerPlayForm"
-                                             oncomplete="PF('MovieTrailerPlayDialog').show()"/>
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-  - Created by Anubhav Nanda on 2021.10.29
-  - Copyright © 2021 Anubhav Nanda. All rights reserved.
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
   -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -21,12 +22,12 @@
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
 
-            <!-- In case of JSF validation error, set 'selected' to null in recipeController -->
+            <!-- In case of JSF validation error, set 'selected' to null in blogController -->
             <c:if test="#{facesContext.validationFailed}">
                 ${blogController.unselect()}
             </c:if>
 
-            <!-- Set 'selected' to null in recipeController when the user refreshes / reloads this JSF page -->
+            <!-- Set 'selected' to null in blogController when the user refreshes / reloads this JSF page -->
             <f:metadata>
                 <f:viewAction action="#{blogController.unselect()}" rendered="#{facesContext.postback}" />
             </f:metadata>
@@ -42,7 +43,7 @@
                                              columnClasses="columnBlogImage, columnMiddlePart, columnViewButton">
                                     <p:graphicImage cache="false" value="#{blogController.blogPhoto(aBlog.id, aBlog.extension)}" width="92px" style="float:left" />
                                     <h:panelGrid style="width:100%; margin-left:10px">
-                                        <!-- Recipe name -->
+                                        <!-- Blog Title and Summary -->
                                         <h:outputText value="#{aBlog.title}"/>
                                         <h:outputText value="#{aBlog.summary}" style="float:left;" />
                                         <p:rating readonly="true" value="#{blogController.getBlogRating(aBlog.id)}" rendered="#{blogController.getBlogRating(aBlog.id) != 0}"/>
@@ -54,8 +55,8 @@
                                                    title="Read More">
 
                                             <!--
-                                            When the Info Icon is clicked on (selected), the apiSearchController.selected method
-                                            is invoked to set the selected current recipe object to the aSearchedRecipe object.
+                                            When the Info Icon is clicked on (selected), the blogController.selected method
+                                            is invoked to set the selected current blog object to the aBlog object.
                                             -->
                                             <f:setPropertyActionListener target="#{blogController.selected}" value="#{aBlog}" />
                                         </p:commandLink>
@@ -93,18 +94,17 @@
                                 </h:panelGrid>
                             </p:panel>
                         </p:dataScroller>
+                        <br/><br/>
+                        <p:commandButton id="createBlogsButton" icon="fas fa-pen" styleClass="rounded-button"
+                                  action="#{blogController.prepareCreate()}" value="Spill Your Thoughts" />
                     </h:form>
                 </p:card>
             </div>
-
             <!--
-            Clicking the Create button displays the included 
-            Create.xhtml file in a dialog window on top of this page.
+            Clicking the Read More button displays the included
+            BlogDetails.xhtml file in a dialog window on top of this page.
             -->
-
             <ui:include src="/userBlog/BlogDetails.xhtml"/>
-
-
         </ui:define>
     </ui:composition>
 </html>

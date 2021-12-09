@@ -1,6 +1,7 @@
 /*
- * Created by Anubhav Nanda on 2021.10.29
- * Copyright © 2021 Anubhav Nanda. All rights reserved.
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
  */
 package edu.vt.controllers;
 
@@ -35,7 +36,7 @@ import java.util.logging.Logger;
 ---------------------------------------------------------------------------
 The @Named (javax.inject.Named) annotation indicates that the objects
 instantiated from this class will be managed by the Contexts and Dependency
-Injection (CDI) container. The name "recipeController" is used within
+Injection (CDI) container. The name "commentController" is used within
 Expression Language (EL) expressions in JSF (XHTML) facelets pages to
 access the properties and invoke methods of this class.
 ---------------------------------------------------------------------------
@@ -43,7 +44,7 @@ access the properties and invoke methods of this class.
 @Named("commentController")
 
 /*
-The @SessionScoped annotation preserves the values of the recipeController
+The @SessionScoped annotation preserves the values of the commentController
 object's instance variables across multiple HTTP request-response cycles
 as long as the user's established HTTP session is alive.
  */
@@ -51,7 +52,7 @@ as long as the user's established HTTP session is alive.
 
 /*
 -----------------------------------------------------------------------------
-Marking the RecipeController class as "implements Serializable" implies that
+Marking the CommentController class as "implements Serializable" implies that
 instances of the class can be automatically serialized and deserialized.
 
 Serialization is the process of converting a class instance (object)
@@ -71,7 +72,7 @@ public class CommentController implements Serializable {
 
     /*
     The @EJB annotation directs the EJB Container Manager to inject (store) the object reference of the
-    RecipeFacade bean into the instance variable 'recipeFacade' after it is instantiated at runtime.
+    CommentFacade bean into the instance variable 'commentFacade' after it is instantiated at runtime.
      */
     @EJB
     private CommentFacade commentFacade;
@@ -82,13 +83,13 @@ public class CommentController implements Serializable {
     @Inject
     private UserController userController;
 
-    // List of object references of Recipe objects
+    // List of object references of Comment objects
     private List<Comment> listOfBlogComments = null;
 
-    // selected = object reference of a selected Recipe object
+    // selected = object reference of a selected Comment object
     private Comment selected;
 
-    // Flag indicating if recipe data changed or not
+    // Flag indicating if comment data changed or not
     private Boolean commentDataChanged;
 
     public List<Comment> getListOfBlogComments(Blog blog) {
@@ -124,7 +125,7 @@ public class CommentController implements Serializable {
 
     /*
      ****************************************
-     *   Unselect Selected Recipe Object   *
+     *   Unselect Selected Comment Object   *
      ****************************************
      */
     public void unselect() {
@@ -137,7 +138,7 @@ public class CommentController implements Serializable {
      *************************************
      */
     public String cancel() {
-        // Unselect previously selected recipe object if any
+        // Unselect previously selected blog object if any
         selected = null;
         return "/blog/List?faces-redirect=true";
     }
@@ -197,7 +198,7 @@ public class CommentController implements Serializable {
 
     /*
      ***************************************
-     *   Prepare to Create a New Recipe    *
+     *   Prepare to Create a New Comment    *
      ***************************************
      */
     public void prepareCreate() {
@@ -252,35 +253,35 @@ public class CommentController implements Serializable {
 
     /*
      ***********************************************
-     *   UPDATE Selected Recipe in the Database       *
+     *   UPDATE Selected Comment in the Database       *
      ***********************************************
      */
     public void update() {
         Methods.preserveMessages();
 
-        persist(PersistAction.UPDATE,"Recipe was Successfully Updated!");
+        persist(PersistAction.UPDATE,"Comment was Successfully Updated!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The UPDATE operation is successfully performed.
             selected = null;        // Remove selection
-            listOfBlogComments = null;     // Invalidate listOfRecipes to trigger re-query.
+            listOfBlogComments = null;     // Invalidate listOfBlogComments to trigger re-query.
         }
     }
 
     /*
      ***********************************************
-     *   DELETE Selected Recipe in the Database       *
+     *   DELETE Selected Comment in the Database       *
      ***********************************************
      */
     public void destroy() {
         Methods.preserveMessages();
 
-        persist(PersistAction.DELETE,"Recipe was Successfully Deleted!");
+        persist(PersistAction.DELETE,"Comment was Successfully Deleted!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The DELETE operation is successfully performed.
             selected = null;        // Remove selection
-            listOfBlogComments = null;     // Invalidate listOfRecipes to trigger re-query.
+            listOfBlogComments = null;     // Invalidate listOfBlogComments to trigger re-query.
         }
     }
 
@@ -305,7 +306,7 @@ public class CommentController implements Serializable {
                      object in the database regardless of whether the object is a newly
                      created object (CREATE) or an edited (updated) object (EDIT or UPDATE).
 
-                     RecipeFacade inherits the edit(selected) method from the AbstractFacade class.
+                     CommentFacade inherits the edit(selected) method from the AbstractFacade class.
                      */
                     commentFacade.edit(selected);
                 } else {
@@ -316,7 +317,7 @@ public class CommentController implements Serializable {
                      The remove(selected) method performs the DELETE operation of the "selected"
                      object in the database.
 
-                     RecipeFacade inherits the remove(selected) method from the AbstractFacade class.
+                     CommentFacade inherits the remove(selected) method from the AbstractFacade class.
                      */
                     commentFacade.remove(selected);
                 }

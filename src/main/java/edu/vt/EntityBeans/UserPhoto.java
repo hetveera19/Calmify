@@ -1,6 +1,7 @@
 /*
- * Created by Anubhav Nanda on 2021.10.16
- * Copyright © 2021 Anubhav Nanda. All rights reserved.
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
  */
 package edu.vt.EntityBeans;
 
@@ -13,7 +14,7 @@ import java.io.Serializable;
 
 /*
 The @Entity annotation designates this class as a JPA Entity POJO class
-representing the UserPhoto table in the CloudDriveDB database.
+representing the UserPhoto table in the CalmifyDB database.
  */
 @Entity
 
@@ -35,7 +36,7 @@ public class UserPhoto implements Serializable {
     /*
     ========================================================
     Instance variables representing the attributes (columns)
-    of the UserPhoto table in the CloudDriveDB database.
+    of the UserPhoto table in the CalmifyDB database.
 
     CREATE TABLE UserPhoto
     (
@@ -70,7 +71,7 @@ public class UserPhoto implements Serializable {
     /*
     =================================================================
     Class constructors for instantiating a UserPhoto entity object to
-    represent a row in the UserPhoto table in the CloudDriveDB database.
+    represent a row in the UserPhoto table in the CalmifyDB database.
     =================================================================
      */
     public UserPhoto() {
@@ -85,7 +86,7 @@ public class UserPhoto implements Serializable {
     /*
     ======================================================
     Getter and Setter methods for the attributes (columns)
-    of the UserPhoto table in the CloudDriveDB database.
+    of the UserPhoto table in the CalmifyDB database.
     ======================================================
      */
     public Integer getId() {

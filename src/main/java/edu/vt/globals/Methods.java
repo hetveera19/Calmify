@@ -1,6 +1,7 @@
 /*
- * Created by Anshika Tyagi on 2021.9.13
- * Copyright © 2021 Anshika Tyagi. All rights reserved.
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
  */
 package edu.vt.globals;
 
@@ -88,12 +89,9 @@ public final class Methods {
             so as to provide for the efficient reading of characters, arrays, and lines.
              */
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            System.out.println("URL 1");
 
             // Create a mutable sequence of characters and store its object reference into buffer
             StringBuilder buffer = new StringBuilder();
-            System.out.println("URL 2");
-
 
             // Create an array of characters of size 10240
             char[] chars = new char[10240];

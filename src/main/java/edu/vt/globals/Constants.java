@@ -1,8 +1,11 @@
 /*
- * Created by Anubhav Nanda on 2021.10.16
- * Copyright © 2021 Anubhav Nanda. All rights reserved.
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
  */
 package edu.vt.globals;
+
+import java.util.Date;
 
 public final class Constants {
     /*
@@ -44,14 +47,14 @@ public final class Constants {
 //    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/Balci/DocRoot/CloudStorage/PhotoStorage/";
 
     // Unix (macOS) or Linux
-    public static final String BLOGS_ABSOLUTE_PATH  = "C:/Users/nanda/DocRoot/CloudStorage/FileStorage/";
-    public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/nanda/DocRoot/CloudStorage/PhotoStorage/";
+    //public static final String BLOGS_ABSOLUTE_PATH  = "C:/Users/nanda/DocRoot/CloudStorage/FileStorage/";
+    //public static final String PHOTOS_ABSOLUTE_PATH = "C:/Users/nanda/DocRoot/CloudStorage/PhotoStorage/";
 
     //--------------------------------
     // To run on your AWS EC2 instance
     //--------------------------------
-    //public static final String BLOGS_ABSOLUTE_PATH  = "/opt/wildfly/DocRoot/CS5704-Team4-FileStorage/BlogPhotoStorage/";
-    //public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/CS5704-Team4-FileStorage/ProfilePhotoStorage/";
+    public static final String BLOGS_ABSOLUTE_PATH  = "/opt/wildfly/DocRoot/CS5704-Team4-FileStorage/BlogPhotoStorage/";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/opt/wildfly/DocRoot/CS5704-Team4-FileStorage/ProfilePhotoStorage/";
 
     /*
      ---------------------------------
@@ -83,16 +86,29 @@ public final class Constants {
     //---------------
     // To run locally
     //---------------
-    public static final String BLOGS_URI  = "http://localhost:8080/files/";
-    public static final String PHOTOS_URI = "http://localhost:8080/photos/";
+    //public static final String BLOGS_URI  = "http://localhost:8080/files/";
+    //public static final String PHOTOS_URI = "http://localhost:8080/photos/";
 
     //-----------------------------------------------------
     // To run on your AWS EC2 instance with your IP address
     //-----------------------------------------------------
-    //public static final String BLOGS_URI  = "http://34.207.113.52:8080/blogphotos/";
-    //public static final String PHOTOS_URI = "http://34.207.113.52:8080/userphotos/";
+    public static final String BLOGS_URI  = "http://34.207.113.52:8080/blogphotos/";
+    public static final String PHOTOS_URI = "http://34.207.113.52:8080/userphotos/";
 
-    /* 
+    //---------------
+    // To run locally
+    //---------------
+    public static final String CANCEL_URI = "http://34.207.113.52:8080/Calmify/Cart.xhtml";
+    public static final String RETURN_URI = "http://34.207.113.52:8080/Calmify/ReviewPayment";
+
+    //-----------------------------------------------------
+    // To run on your AWS EC2 instance with your IP address
+    //-----------------------------------------------------
+
+//    public static final String CANCEL_URI = "http://localhost:8080/Calmify/payment/cancel.xhtml";
+//    public static final String RETURN_URI = "http://localhost:8080/Calmify/ReviewPayment";
+
+    /*
     =============================================
     |   Our Design Decision for Profile Photo   |
     =============================================
@@ -128,19 +144,20 @@ public final class Constants {
         "What was your favorite place to visit as a child?"
     };
 
+    public static final String YOUTUBE_API_KEY = "AIzaSyDFru9SVhCqkL9rwLv-PHtgPHwLcVQ8JEg";
 
-    public  static String youTube1;
-    public  static String youTube2;
-    public  static String youTube3;
-    public  static String youTube4;
-    public  static String youTube5;
-    public  static String youTube6;
+    public static String youTube1;
+    public static String youTube2;
+    public static String youTube3;
+    public static String youTube4;
+    public static String youTube5;
+    public static String youTube6;
 
     public static String paypalEmailId="sb-dfe7478850514@business.example.com";
     public static String paypalPassword="0eM-Cked";
     public static String paypalSignature="AWAAFRIeFvQSQThbQlrHiawlbJmFAexaBTj3fnveemW8fb2Am.lDt-wK";
-    public static String CLIENTID="AcK238kuY-GBjvokTf7RKipvs9sWDnWYBXSQNhiEUP3gdWuBOJhvc-1RUj9isljb-4_KWAYe0JurIxYc";
-    public static String SECRET="EMpGQSGy1vXzAGt51VnuDQxFvcFJPlmxG5Ag1LsQKIe4npycbPcneso3KN9P8CsfLD_VEwNT7Tx6rl3l";
+    public static final String CLIENTID="AcK238kuY-GBjvokTf7RKipvs9sWDnWYBXSQNhiEUP3gdWuBOJhvc-1RUj9isljb-4_KWAYe0JurIxYc";
+    public static final String SECRET="EMpGQSGy1vXzAGt51VnuDQxFvcFJPlmxG5Ag1LsQKIe4npycbPcneso3KN9P8CsfLD_VEwNT7Tx6rl3l";
     public static String paypalRequestBody="{" +
             " \"sender_batch_header\":{" +
             "\"sender_batch_id\":\"Payouts_2018_100007\"," +

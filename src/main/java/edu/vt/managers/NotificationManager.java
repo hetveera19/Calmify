@@ -1,3 +1,9 @@
+/*
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
+ */
+
 package edu.vt.managers;
 
 import edu.vt.EntityBeans.User;
@@ -38,7 +44,13 @@ public class NotificationManager {
     MimeMessage htmlEmailMessage;       // javax.mail.internet.MimeMessage
 
 
-    @Schedule(minute = "40" , hour="00", persistent=false)
+    /*
+        Schedule a timer for automatic creation with a timeout schedule based on a cron-like time expression. The annotated method is used as the timeout callback method.
+        All elements of this annotation are optional. If none are specified a persistent timer will be created with callbacks occuring every day at midnight in the default time zone associated with the container in which the application is executing.
+        There are seven elements that constitute a schedule specification which are listed below. In addition, the timezone element may be used to specify a non-default time zone in whose context the schedule specification is to be evaluated;
+        the persistent element may be used to specify a non-persistent timer, and the info element may be used to specify additional information that may be retrieved whe
+     */
+    @Schedule(minute = "30", hour = "08", persistent = false)
     //@Schedule(minute="*/5", hour="*", persistent=false)
 
     public void sendEmail() throws AddressException, MessagingException, Exception {
@@ -62,41 +74,41 @@ public class NotificationManager {
             return;
         }
 
-        // Set Email Server Properties
-        emailServerProperties = System.getProperties();
-        emailServerProperties.put("mail.smtp.port", "587");
-        emailServerProperties.put("mail.smtp.auth", "true");
-        emailServerProperties.put("mail.smtp.starttls.enable", "true");
+        listOfSubscribedUsers = userFacade.findBySubscribe(true);
 
-        try {
-            // Create an email session using the email server properties set above
-            emailSession = Session.getDefaultInstance(emailServerProperties, null);
-            /*
-            Create a Multi-purpose Internet Mail Extensions (MIME) style email
-            message from the MimeMessage class under the email session created.
-             */
-            htmlEmailMessage = new MimeMessage(emailSession);
+        for (User user : listOfSubscribedUsers) {
 
-            // Set the email TO field to emailTo, which can contain only one email address
+            // Set Email Server Properties
+            emailServerProperties = System.getProperties();
+            emailServerProperties.put("mail.smtp.port", "587");
+            emailServerProperties.put("mail.smtp.auth", "true");
+            emailServerProperties.put("mail.smtp.starttls.enable", "true");
 
-            // Set the email subject line
-            htmlEmailMessage.setSubject(Constants.EMAIL_SUBJECT);
+            try {
+                // Create an email session using the email server properties set above
+                emailSession = Session.getDefaultInstance(emailServerProperties, null);
+                /*
+                Create a Multi-purpose Internet Mail Extensions (MIME) style email
+                message from the MimeMessage class under the email session created.
+                 */
+                htmlEmailMessage = new MimeMessage(emailSession);
 
-            // Set the email body to the HTML type text
+                // Set the email TO field to emailTo, which can contain only one email address
 
-            // Create a transport object that implements the Simple Mail Transfer Protocol (SMTP)
-            Transport transport = emailSession.getTransport("smtp");
+                // Set the email subject line
+                htmlEmailMessage.setSubject(Constants.EMAIL_SUBJECT);
 
-            /*
-            Connect to Gmail's SMTP server using the username and password provided.
-            For the Gmail's SMTP server to accept the unsecure connection, the
-            Cloud.Software.Email@gmail.com account's "Allow less secure apps" option is set to ON.
-             */
-            transport.connect("smtp.gmail.com", "anubhav.nanda17@gmail.com", "tfsasytzcvtwahtk");
+                // Set the email body to the HTML type text
 
-            listOfSubscribedUsers = userFacade.findBySubscribe(true);
+                // Create a transport object that implements the Simple Mail Transfer Protocol (SMTP)
+                Transport transport = emailSession.getTransport("smtp");
 
-            for(User user : listOfSubscribedUsers) {
+                /*
+                Connect to Gmail's SMTP server using the username and password provided.
+                For the Gmail's SMTP server to accept the unsecure connection, the
+                Cloud.Software.Email@gmail.com account's "Allow less secure apps" option is set to ON.
+                 */
+                transport.connect("smtp.gmail.com", "hello.calmify@gmail.com", "nbnxyuizvmryzkbh");
 
 
                 String emailBodyText = "<div align=\"left\"> Hi " + user.getFirstName() +
@@ -113,56 +125,18 @@ public class NotificationManager {
                 //transport.sendMessage(htmlEmailMessage, new InternetAddress("nandaa@vt.edu"));
 
                 System.out.println(user.getEmail());
+                transport.close();
+                // Close this service and terminate its connection
+
+            } catch (AddressException ae) {
+                Methods.showMessage("Fatal Error", "Email Address Exception Occurred!",
+                        "See: " + ae.getMessage());
+
+            } catch (MessagingException me) {
+                Methods.showMessage("Fatal Error",
+                        "Email Messaging Exception Occurred! Internet Connection Required!",
+                        "See: " + me.getMessage());
             }
-
-            // Close this service and terminate its connection
-            transport.close();
-
-        } catch (AddressException ae) {
-            Methods.showMessage("Fatal Error", "Email Address Exception Occurred!",
-                    "See: " + ae.getMessage());
-
-        } catch (MessagingException me) {
-            Methods.showMessage("Fatal Error",
-                    "Email Messaging Exception Occurred! Internet Connection Required!",
-                    "See: " + me.getMessage());
         }
     }
-
-/*
-        public void print() {
-
-        //FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
-        if (listOfUsers == null) {
-            listOfUsers = userFacade.findAll();
-        }
-
-        for(User user : listOfUsers) {
-            System.out.println(user.getEmail());
-        }
-
-        try {
-            System.out.println(1);
-
-            String quoteJson = "https://zenquotes.io/api/today/";
-
-            // Obtain the JSON file (String of characters) containing the search results
-            // The readUrlContent() method is given below
-            String searchResultsJsonData = Methods.readUrlContent(quoteJson);
-            System.out.println(2);
-
-            // Create a new JSON array from the returned file
-            JSONArray searchResultsJson = new JSONArray(searchResultsJsonData);
-            JSONObject jsonObject = searchResultsJson.getJSONObject(0);
-            String a = (String) jsonObject.get("a");
-            String q = (String) jsonObject.get("q");
-
-            quote = q+"by"+a;
-        } catch (Exception ex) {
-            Methods.showMessage("Information", "No Results!", "No recipe found for the search query!");
-        }
-
-        System.out.println(quote);
-    }*/
 }

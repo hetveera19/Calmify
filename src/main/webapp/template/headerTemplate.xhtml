@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Created by Anubhav Nanda on 2021.9.12
-  - Copyright © 2021 Anubhav Nanda. All rights reserved.
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
   -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -25,7 +26,7 @@
                 <tr>
                     <!--
                     *************************************
-                    Column 1 (Left): CarStar Logo Image
+                    Column 1 (Left):  Hamburger Menu Button
                     *************************************
                     -->
                     <td align="left" valign="middle" style="width:100px;">
@@ -36,8 +37,8 @@
                                 <p:menuitem value="Home" outcome="/index" icon="fas fa-home"/>
                                 <p:menuitem value="Improve Focus" outcome="/Items/Focus" icon="fas fa-bullseye"/>
                                 <p:menuitem value="Experience Mindfulness" outcome="/Items/Mindfulness" icon="fas fa-sun"/>
-                                <p:menuitem value="Shop" outcome="/Test" icon="fas fa-shopping-cart"/>
-                                <p:menuitem value="Public Blog" outcome="/blog/List" icon="far fa-comment-dots"/>
+                                <p:menuitem value="Shop" outcome="/shop/Shop" icon="fas fa-shopping-cart"/>
+                                <p:menuitem value="Public Blogs" outcome="/blog/List" icon="far fa-comment-dots"/>
                                 <!-- Menu Options IF a User is Signed In -->
                                 <c:if test="#{userController.isLoggedIn() == true}">
                                     <p:menuitem value="Spill Your Thoughts" action="#{blogController.prepareCreate}" icon="fas fa-pen"/>
@@ -64,11 +65,11 @@
                     ***************************
                     -->
                     <td align="center" valign="middle">
-                        <span class="headerTitle">BREATE</span>
+                        <span class="headerTitle">A Calming Influence</span>
                     </td>
                     <!--
                     ***************************************
-                    Column 3 (Right): Hamburger Menu Button
+                    Column 3 (Right): Calmify Logo Image
                     ***************************************
                     -->
 

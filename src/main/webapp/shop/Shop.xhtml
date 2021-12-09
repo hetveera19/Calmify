@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template/siteTemplate.xhtml">
+    <style type="text/css">
+        .product .product-grid-item .product-grid-image {
+            width: 75%;
+            box-shadow: 0 3px 6px rgb(0 0 5), 0 3px 6px rgb(0 0 5);
+            margin: 2rem 0;
+            height: 50%;
+        }
+
+        .product .product-grid-item .product-grid-item-content {
+            text-align: center;
+        }
+
+        .product .product-grid-item .product-price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: left;
+        }
+    </style>
+<ui:define name="title">
+    <!-- Set the page title -->
+    <h:outputText value="Shop" />
+</ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <div align="center">
+            <h2>Shop Self-Care Products</h2>
+        </div>
+        <div class="product">
+            <h:form id="form">
+                <p:dataGrid var="aShopItem" value="#{shopItemController.listOfShopItems}" columns="3" layout="grid"
+                            rows="9" paginator="true" id="products" widgetVar="shopDataTable"
+                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="6,9,12">
+                    <f:facet name="header">
+                            <div align="right" style="margin-right: 5%;">
+                                <p:button id="cartButton" icon="fas fa-shopping-cart" styleClass="button" outcome="/Cart"
+                                          value="My Cart" rendered="#{userController.isLoggedIn() == true}"/>
+                            </div>
+                    </f:facet>
+                    <p:card>
+                    <div class="product-grid-item" align="center">
+                        <div class="product-grid-item-top">
+                            <div>
+                                <i class="pi pi-tag product-category-icon"/><h:outputText value="&nbsp;&nbsp;"/>
+                                <span style="font-style:italic">#{aShopItem.category}</span>
+                            </div>
+                            <br/>
+                        </div>
+                        <div style="padding-bottom: 10px" class="product-grid-item-content">
+                            <p:graphicImage url="#{aShopItem.imageUrl}" styleClass="product-grid-image" width="50%" height="150px"/>
+                            <div>#{aShopItem.name}</div>
+                            <div>#{product.description}</div>
+                        </div>
+                        <br/><br/>
+                    </div>
+                    <div>
+                            <h:outputText value="#{aShopItem.price}" style="font-size: 1.5rem;font-weight: 600;" >
+                                <f:convertNumber currencySymbol="$" type="currency"/>
+                            </h:outputText>
+                            <p:commandButton icon="fas fa-cart-plus" ajax="false" actionListener="#{cartController.createCartItem(aShopItem.id)}" style="margin-left: 72%;"/>
+                    </div>
+                    </p:card>
+                </p:dataGrid>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

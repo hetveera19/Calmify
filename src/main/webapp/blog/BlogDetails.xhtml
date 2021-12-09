@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Created by Anubhav Nanda on 2021.10.29
-  - Copyright © 2021 Anubhav Nanda. All rights reserved.
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
   -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -16,8 +17,8 @@
 
     <!--
     ==========================================================
-    |  Clicking the INFO button displays this Dialog window  |
-    |  to show the Details of the Selected Searched Recipe.  |
+    |  Clicking the Read More button displays this Dialog    |
+    |  window to show the Details of the Selected  blog.     |
     ==========================================================
     -->
     <p:dialog id="blogDetailsDialog" header="View Blog" widgetVar="blogDetailsDialog"
@@ -30,10 +31,10 @@
             pulsate, scale, shake, size, slide and transfer. [PrimeFaces user Guide]
         -->
             <h:form id="blogDetailsForm" class="ui-datatable-data">
-                <input type="text"  style="display:none" />
+                <p:inputText value="#{blogController.test}" style="position:absolute;top:-100px;opacity: 0;"/>
                 <div align="center">
                     <h:panelGroup id="display">
-                        <!-- Display the selected recipe's photo -->
+                        <!-- Display the selected blog's title -->
                         <h:outputText value="#{blogController.selected.title}" style="color: maroon"/>
                         <br /><br />
                         <div align="justify">
@@ -42,14 +43,13 @@
                         <br/>
                     </h:panelGroup>
                     <h:form id="commentForm" class="ui-datatable-data">
-                        <p:growl id="messages" showDetail="true"/>
                         <p:panel rendered="#{blogController.selected != null and userController.isLoggedIn() == true}">
                             <p:outputLabel value="Comment:" for="content" />
                             <br/><br/>
-                            <p:rating value="#{commentController.selected.rating}"/>
+                            <p:rating value="#{commentController.selected.rating}" tabindex="-1"/>
                             <br/><br/>
                             <p:inputText id = "content" value="#{commentController.selected.content}"
-                                      style="height: 50px; width: 80%; margin-left: 10%;"/>
+                                      style="height: 50px; width: 80%; margin-left: 10%;" tabindex="-1"/>
                             <br/><br/>
                             <div align="right" style="margin-right: 5%;">
                                 <p:commandButton value="Post" icon="fas fa-save" styleClass="rounded-button"
@@ -70,7 +70,7 @@
                         <p:panel style="text-align:left" >
                             <h:panelGrid columns="2" style="width:100%"
                                          columnClasses="columnBlogImage, columnMiddlePart ">
-                                <p:graphicImage url="#{commentController.userPhoto(aComment.user.id)}" width="92px" styleClass="smallProfilePhoto" style="float:left" />
+                                <p:graphicImage url="#{commentController.userPhoto(aComment.user.id)}" width="92px"  style="float:left" />
                                 <h:panelGrid style="width:100%; margin-left:10px">
                                     <h:outputText value="#{aComment.user.firstName}" />
                                     <h:outputText value="#{commentController.publicationDay(aComment.publicationDate)}" />

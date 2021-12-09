@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Created by Anubhav Nanda on 2021.9.12
-  ~ Copyright © 2021 Anubhav Nanda. All rights reserved.
+  ~ Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  ~ Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  ~
   -->
 
 <jboss-web xmlns="http://www.jboss.com/xml/ns/javaee"

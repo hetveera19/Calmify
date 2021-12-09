@@ -1,6 +1,7 @@
 /*
- * Created by Anubhav Nanda on 2021.10.29
- * Copyright © 2021 Anubhav Nanda. All rights reserved.
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
  */
 package edu.vt.FacadeBeans;
 
@@ -19,7 +20,14 @@ public abstract class AbstractFacade<T> {
     /*
     The following concrete facade class inherits from this AbstractFacade class:
 
-        - RecipeFacade    for Recipe entity class    representing database table Recipe
+        - BlogFacade    for Blog entity class    representing database table Blog
+        - CartFacade    for Cart entity class    representing database table Cart
+        - CommentFacade    for Comment entity class    representing database table Comment
+        - ItemDetailsFacade    for ItemDetails entity class    representing database table ItemDetails
+        - OrdersFacade    for Orders entity class    representing database table Orders
+        - ShopFacade    for Shop entity class    representing database table Shop
+        - UserFacade    for User entity class    representing database table User
+        - UserPhotoFacade    for UserPhoto entity class    representing database table UserPhoto
 
      Each concrete facade class calls the following constructor method by passing entity
      class type T as a parameter. A concrete class provides the actual implementation.

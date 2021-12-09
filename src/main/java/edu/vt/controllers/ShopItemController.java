@@ -1,6 +1,7 @@
 /*
- * Created by Het Veera on 2021.11.1
- * Copyright © 2021 Het Veera. All rights reserved.
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
  */
 package edu.vt.controllers;
 
@@ -120,7 +121,7 @@ public class ShopItemController implements Serializable {
                      object in the database regardless of whether the object is a newly
                      created object (CREATE) or an edited (updated) object (EDIT or UPDATE).
 
-                     VideoFacade inherits the edit(selected) method from the AbstractFacade class.
+                     ShopFacade inherits the edit(selected) method from the AbstractFacade class.
                      */
                     shopFacade.edit(selected);
                 } else {
@@ -131,7 +132,7 @@ public class ShopItemController implements Serializable {
                      The remove(selected) method performs the DELETE operation of the "selected"
                      object in the database.
 
-                     VideoFacade inherits the remove(selected) method from the AbstractFacade class.
+                     ShopFacade inherits the remove(selected) method from the AbstractFacade class.
                      */
                     shopFacade.remove(selected);
                 }
@@ -156,8 +157,8 @@ public class ShopItemController implements Serializable {
 
     public void prepareCreate() {
         /*
-        Instantiate a new Video object and store its object reference into
-        instance variable 'selected'. The Video class is defined in Video.java
+        Instantiate a new ShopItem object and store its object reference into
+        instance variable 'selected'. The ShopItem class is defined in ShopItems.java
          */
         selected = new ShopItems();
     }
@@ -175,13 +176,13 @@ public class ShopItemController implements Serializable {
 
     /*
     **********************************
-    CREATE a New Video in the Database
+    CREATE a New Shop Iten in the Database
     **********************************
      */
     public void create() {
         Methods.preserveMessages();
 
-        persist(PersistAction.CREATE,"Video was Successfully Created!");
+        persist(PersistAction.CREATE,"Shop Item was Successfully Created!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The CREATE operation is successfully performed.
@@ -192,13 +193,13 @@ public class ShopItemController implements Serializable {
 
     /*
     *************************************
-    UPDATE Selected Video in the Database
+    UPDATE Selected ShopItem in the Database
     *************************************
      */
     public void update() {
         Methods.preserveMessages();
 
-        persist(PersistAction.UPDATE,"Video was Successfully Updated!");
+        persist(PersistAction.UPDATE,"ShopItem was Successfully Updated!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The UPDATE operation is successfully performed.
@@ -209,13 +210,13 @@ public class ShopItemController implements Serializable {
 
     /*
     ***************************************
-    DELETE Selected Video from the Database
+    DELETE Selected ShopItem from the Database
     ***************************************
      */
     public void destroy() {
         Methods.preserveMessages();
 
-        persist(PersistAction.DELETE,"Video was Successfully Deleted!");
+        persist(PersistAction.DELETE,"ShopItem was Successfully Deleted!");
 
         if (!JsfUtil.isValidationFailed()) {
             // No JSF validation error. The DELETE operation is successfully performed.
@@ -223,65 +224,7 @@ public class ShopItemController implements Serializable {
             listOfShopItems = null;    // Invalidate listOfShopItems to trigger re-query.
         }
     }
-    //private List<Shop> listOfShopItems = null;
-    //    public String getSearchString() {
-//        return searchString;
-//    }
-//
-//    public void setSearchString(String searchString) {
-//        this.searchString = searchString;
-//    }
-//
-//    public SearchedItem getSelected() {
-//        return selected;
-//    }
-//
-//    public void setSelected(SearchedItem selected) {
-//        this.selected = selected;
-//    }
-//
-//    public String getDietLabel() {
-//        return dietLabel;
-//    }
-//
-//    public void setDietLabel(String dietLabel) {
-//        this.dietLabel = dietLabel;
-//    }
-//
-//    public String getHealthLabel() {
-//        return healthLabel;
-//    }
-//
-//    public void setHealthLabel(String healthLabel) {
-//        this.healthLabel = healthLabel;
-//    }
-//
-//    public String getMaxNoOfRecipes() {
-//        return maxNoOfRecipes;
-//    }
-//
-//    public void setMaxNoOfRecipes(String maxNoOfRecipes) {
-//        this.maxNoOfRecipes = maxNoOfRecipes;
-//    }
-//
-//    public String getSearchApiUrl() {
-//        return searchApiUrl;
-//    }
-//
-//    public void setSearchApiUrl(String searchApiUrl) {
-//        this.searchApiUrl = searchApiUrl;
-//    }
-//    public List<String> getListOfDietLabels(){
-//        return Constants.DIET_LABELS;
-//    }
-//
-//    public List<String> getListOfHealthLabels(){
-//        return Constants.HEALTH_LABELS;
-//    }
-//
-//    public List<String> getListOfMaximumNumberOfRecipies(){
-//        return Constants.MAX_NUMBER_OF_RECIPIES;
-//    }
+
     public String getCategory() {
         return category;
     }
@@ -314,212 +257,6 @@ public class ShopItemController implements Serializable {
     ---------------------------------------------------------
     Search for items according to category and price entered by the user
     ---------------------------------------------------------
-     */
-//    public String performSearch() {
-//
-//        selected = null;
-//        listOfSearchedItems = new ArrayList<>();
-//        dietLabel=dietLabel.toLowerCase();
-//        healthLabel=healthLabel.toLowerCase();
-//        //searchApiUrl = "https://api.edamam.com/search?q="+searchString+"&app_id="+Constants.FREE_RECIPE_SEARCH_API_ID+"&app_key="+Constants.FREE_RECIPE_SEARCH_API_KEY+"&from=0&to="+maxNoOfRecipes+"&diet="+dietLabel+"&health="+healthLabel+"";
-//
-//        System.out.println(searchApiUrl);
-//        try {
-//                // Obtain the JSON file containing the recipe search results at the given page number
-//                String recipeSearchResultsJsonData = readUrlContent(searchApiUrl);
-//
-//                // Instantiate a JSON object from the JSON data obtained
-//                JSONObject resultsJsonObject = new JSONObject(recipeSearchResultsJsonData);
-//
-//                // Obtain a JSONArray of recipe objects (Each recipe is represented as a JSONObject)
-//                JSONArray jsonArrayFoundRecipes = resultsJsonObject.getJSONArray("hits");
-//
-//                int index = 0;
-//
-//                //System.out.println(jsonArrayFoundRecipes.toString());
-//
-//                if (jsonArrayFoundRecipes.length() > index) {
-//
-//                    while (jsonArrayFoundRecipes.length() > index) {
-//
-//                        // Get the recipe JSONObject at index
-//                        JSONObject jsonObject = jsonArrayFoundRecipes.getJSONObject(index);
-//                        JSONObject foundRecipe = jsonObject.getJSONObject("recipe");
-//                        /*
-//                        ======== JSON Data Optional Processing ========
-//
-//                        optBoolean(String key, boolean defaultValue)
-//                            Obtain the Boolean value for the given "key" if a value exists; otherwise, use the defaultValue.
-//
-//                        optDouble(String key, double defaultValue)
-//                            Obtain the Double value for the given "key", or use the defaultValue if there is no such key or if its value is not a number.
-//
-//                        optInt(String key, int defaultValue)
-//                            Obtain the Int value for the given "key", or use the defaultValue if there is no such key or if its value is not a number.
-//
-//                        optLong(String key, long defaultValue)
-//                            Obtain the Long value for the given "key", or use the defaultValue if there is no such key or if its value is not a number.
-//
-//                        optString(String key, String defaultValue)
-//                            Obtain the String value for the given "key" if a value exists; otherwise, use the defaultValue.
-//
-//                        ============================
-//                        Recipe Label
-//                        ============================
-//                         */
-//                        String labelA = foundRecipe.optString("label", "");
-//                        if (labelA.equals("")) {
-//                            index++;
-//                            continue;
-//                        }
-//
-//                        /*
-//                        =========================
-//                        Recipe Image URL
-//                        =========================
-//                         */
-//                        String image_urlA = foundRecipe.optString("image", "");
-//                        if (image_urlA.equals("")) {
-//                            image_urlA = "No image url is provided!";
-//                        }
-//
-//                        /*
-//                        ==================
-//                        Recipe Source / Publisher
-//                        ==================
-//                         */
-//                        String sourceA = foundRecipe.optString("source", "");
-//                        if (sourceA.equals("")) {
-//                            sourceA = "No Source Provided";
-//                        }
-//
-//                        /*
-//                        =====================================
-//                        Recipe website
-//                        =====================================
-//                         */
-//                        String websiteUrlA = foundRecipe.optString("url", "");
-//                        if (websiteUrlA == "") {
-//                            index++;
-//                            continue;
-//                        }
-//
-//                        /*
-//                     ==================
-//                     Recipe Diet Labels
-//                     ==================
-//                     */
-//                        JSONArray dietLabelsAsArray = foundRecipe.getJSONArray("dietLabels");
-//
-//                        String dietLabelsA = "";
-//                        int dietLabelsArrayLength = dietLabelsAsArray.length();
-//
-//                        if (dietLabelsArrayLength > 0) {
-//                            for (int j = 0; j < dietLabelsArrayLength; j++) {
-//                                String aDietLabel = dietLabelsAsArray.optString(j, "");
-//                                if (j < dietLabelsArrayLength - 1) {
-//                                    aDietLabel = aDietLabel + ", ";
-//                                }
-//                                dietLabelsA = dietLabelsA + aDietLabel;
-//                            }
-//                        }
-//
-//                        /*
-//                     ====================
-//                     Recipe Health Labels
-//                     ====================
-//                     */
-//                        JSONArray healthLabelsAsArray = foundRecipe.getJSONArray("healthLabels");
-//
-//                        String healthLabelsA = "";
-//                        int healthLabelsArrayLength = healthLabelsAsArray.length();
-//
-//                        if (healthLabelsArrayLength > 0) {
-//                            for (int j = 0; j < healthLabelsArrayLength; j++) {
-//                                String aHealthLabel = healthLabelsAsArray.optString(j, "");
-//                                if (j < healthLabelsArrayLength - 1) {
-//                                    aHealthLabel = aHealthLabel + ", ";
-//                                }
-//                                healthLabelsA = healthLabelsA + aHealthLabel;
-//                            }
-//                        }
-//
-//                        /*
-//                     =======================
-//                     Recipe Ingredient Lines
-//                     =======================
-//                     */
-//                        JSONArray ingredientLinesAsArray = foundRecipe.getJSONArray("ingredientLines");
-//
-//                        String ingredientLinesA = "";
-//                        int ingredientLinesArrayLength = ingredientLinesAsArray.length();
-//
-//                        if (ingredientLinesArrayLength > 0) {
-//                            for (int j = 0; j < ingredientLinesArrayLength; j++) {
-//                                String anIngredientLine = ingredientLinesAsArray.optString(j, "");
-//                                if (j < ingredientLinesArrayLength - 1) {
-//                                    anIngredientLine = anIngredientLine + ", ";
-//                                }
-//                                ingredientLinesA = ingredientLinesA + anIngredientLine;
-//                            }
-//                        }
-//
-//                        /*
-//                     ===============
-//                     Recipe Calories
-//                     ===============
-//                     */
-//                        Double caloriesA = foundRecipe.optDouble("calories", 0.0);
-//
-//                        if (caloriesA == 0.0) {
-//                            // Skip the recipe with unknown calories
-//                            index++;
-//                            continue;   // Jump to the next iteration
-//
-//                        } else {
-//                            /* Round the calories value to 2 decimal places */
-//                            caloriesA = caloriesA * 100;
-//                            caloriesA = (double) Math.round(caloriesA);
-//                            caloriesA = caloriesA / 100;
-//                        }
-//
-//
-//                        SearchedItem recipe = new SearchedItem(labelA, image_urlA, sourceA,
-//                                websiteUrlA, dietLabelsA, healthLabelsA, ingredientLinesA, caloriesA);
-//
-//                        System.out.println(recipe.toString());
-//
-//                        // Add the newly created recipe object to the list of searchedRecipes
-//                        listOfSearchedRecipes.add(recipe);
-//                        index++;
-//                    }
-//
-//                }
-//            //}
-//
-//        } catch (Exception ex) {
-//            Methods.showMessage("Fatal Error", "The Recipe API limit of 4 accesses per second has been exceeded!",
-//                    "See: " + ex.getMessage());
-//            clear();
-//            searchString = "";
-//            return "";
-//        }
-//        searchString="";
-//        return "/apiSearch/ApiSearchResults?faces-redirect=true";
-//    }
-
-//    public void clear() {
-//        searchString="";
-//        healthLabel="";
-//        dietLabel="";
-//        maxNoOfRecipes="";
-//    }
-
-    /*
-     ************************
-     *   Read URL Content   *
-     ************************
-     */
     /**
      * Return the content of a given URL as String
      *

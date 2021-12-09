@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Created by Anubhav Nanda on 2021.10.16
-  - Copyright © 2021 Anubhav Nanda. All rights reserved.
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
   -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
 
     <!-- This page is constructed based on the siteTemplate -->
@@ -62,6 +64,17 @@
                                 <li class="verticalMenuItem">
                                     <!--
                                     ================================
+                                    |         MY FILES Link        |
+                                    ================================
+                                    -->
+                                    <h:link outcome="/shop/UserOrders">
+                                        <i class="fas fa-cash-register"/>My Orders
+                                    </h:link>
+                                </li>
+
+                                <li class="verticalMenuItem">
+                                    <!--
+                                    ================================
                                     |      EDIT PROFILE Link       |
                                     ================================
                                     -->
@@ -91,17 +104,31 @@
                                         <i class="fas fa-key" />&nbsp;Change Password
                                     </h:link>
                                 </li>
+                                <c:if test="#{userController.isSubscribed() == true}">
+                                    <li class="verticalMenuItem">
+                                        <!--
+                                        ================================
+                                        |      EDIT PROFILE Link       |
+                                        ================================
+                                        -->
+                                        <h:commandLink action="#{userController.unsubscribe()}">
+                                            <i class="fas fa-envelope" />&nbsp;Unsubscribe
+                                        </h:commandLink>
+                                    </li>
+                                </c:if>
+                                <c:if test="#{userController.isSubscribed() == false}">
+                                    <li class="verticalMenuItem">
+                                        <!--
+                                        ================================
+                                        |      EDIT PROFILE Link       |
+                                        ================================
+                                        -->
+                                        <h:commandLink action="#{userController.subscribe()}">
+                                            <i class="fas fa-envelope" />&nbsp;Subscribe
+                                        </h:commandLink>
+                                    </li>
+                                </c:if>
 
-                                <li class="verticalMenuItem">
-                                    <!--
-                                    ================================
-                                    |      EDIT PROFILE Link       |
-                                    ================================
-                                    -->
-                                    <h:commandLink action="#{userController.unsubscribe()}">
-                                        <i class="fas fa-envelope" />&nbsp;Unsubscribe
-                                    </h:commandLink>
-                                </li>
 
                                 <li class="verticalMenuItem">
                                     <!--
@@ -254,7 +281,7 @@
                             immediate="true" causes the execution of only the Apply Request Values Phase. 
                             Therefore, the <f:event> validation is not performed since the operation is cancelled.
                             -->
-                            <p:commandButton id="cancel" value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
+                            <p:commandButton id="cancel" value="Cancel" icon="fas fa-ban" styleClass="rounded-button"
                                              immediate="true" oncomplete="PF('SecurityQuestionDialog').hide()" />
                         </div>
                         <br />

@@ -1,6 +1,7 @@
 /*
- * Created by Anubhav Nanda on 2021.10.16
- * Copyright © 2021 Anubhav Nanda. All rights reserved.
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
  */
 package edu.vt.controllers;
 
@@ -282,6 +283,16 @@ public class UserController implements Serializable {
         return sessionMap.get("username") != null;
     }
 
+    public boolean isSubscribed() {
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        User user = (User) sessionMap.get("user") ;
+
+        System.out.println(user.getSubscribe());
+
+        return user.getSubscribe();
+    }
+
+
     /*
     **************************************
     Return List of U.S. State Postal Codes
@@ -411,6 +422,7 @@ public class UserController implements Serializable {
             newUser.setSecurityAnswer(answerToSecurityQuestion);
             newUser.setEmail(email);
             newUser.setUsername(username);
+            newUser.setSubscribe(true);
 
             /*
             Invoke class Password's createHash() method to convert the user-entered String
@@ -602,6 +614,29 @@ public class UserController implements Serializable {
 
     }
 
+    public void subscribe() {
+
+        Methods.preserveMessages();
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        User subscribeUser = (User) sessionMap.get("user");
+
+        try {
+
+            // Store the changes in the database
+            subscribeUser.setSubscribe(true);
+            userFacade.edit(subscribeUser);
+
+            Methods.showMessage("Information", "Success!",
+                    "User's Account is Successfully Subscribed!");
+
+        } catch (EJBException ex) {
+            username = "";
+            Methods.showMessage("Fatal Error",
+                    "Something went wrong while subscribing user's profile!",
+                    "See: " + ex.getMessage());
+        }
+
+    }
 
     /*
     ***************************************

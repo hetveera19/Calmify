@@ -1,0 +1,59 @@
+<!--
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Receipt" />
+    </ui:define>
+
+    <div align="center">
+        <p:panel header="Payment Receipt">
+        </p:panel>
+    </div>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <div align="center">
+                <h1>Payment Done. Thank you for purchasing our products</h1>
+                <br/>
+                <h2>Receipt Details:</h2>
+                <table>
+                    <tr>
+                        <td><b>Merchant:</b></td>
+                        <td>Calmify LTD.</td>
+                    </tr>
+                    <tr>
+                        <td><b>Payer:</b></td>
+                        <td>${reviewPaymentController.firstName} ${reviewPaymentController.lastname}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Subtotal:</b></td>
+                        <td>${reviewPaymentController.total} USD</td>
+                    </tr>
+                    <tr>
+                        <td><b>Shipping:</b></td>
+                        <td>${reviewPaymentController.shipping} USD</td>
+                    </tr>
+                    <tr>
+                        <td><b>Tax:</b></td>
+                        <td>${reviewPaymentController.tax} USD</td>
+                    </tr>
+                    <tr>
+                        <h:button value="View My Orders" outcome="/shop/UserOrders"/>
+                    </tr>
+                </table>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

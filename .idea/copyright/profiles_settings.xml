@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="Tyagi Copyright Notice">
+  <settings>
     <module2copyright>
-      <element module="All" copyright="Tyagi Copyright Notice" />
+      <element module="All" copyright="Team 4 Copyright Profile" />
     </module2copyright>
   </settings>
 </component>

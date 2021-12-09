@@ -1,7 +1,8 @@
-/*****************************************************
-*   Cascading Style Sheets (CSS) Style Definitions   *
-*   Created by Osman Balci for the CarStar app.      *
-*****************************************************/
+/*
+ * Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+ * Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+ *
+ */
 
 html, body {
     background: #2980B9;  /* fallback for old browsers */
@@ -167,7 +168,7 @@ a:active {
 /* Used in headerTemplate */
 .headerTitle {
     font-family: "Dancing Script", cursive;
-    font-size: 40px;
+    font-size: 25px;
     color: white;
     overflow: hidden;
 }
@@ -224,7 +225,6 @@ Scale the image downward, but do not enlarge it beyond its actual width size.
 ======================================
 */
 
-/* Style the p:contentFlow image captions in CarLogosFlow.xhtml */
 .caption {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18pt;
