@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Experience Mindfulness"/>
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <h:form id="form">
+            <p:carousel value="#{PodcastController.podcast1}" var="podcast" numVisible="3" numScroll="3"
+                        circular="true" autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}">
+                <f:facet name="header">
+                    <h2 align="center">Short Meditations to focus on your inner self</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <iframe frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}" class="video-image"
+                                style="text-align: center;">
+                        </iframe>
+                    </div>
+                </div>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{PodcastController.podcast2}" var="podcast" numVisible="3" numScroll="3"
+                        circular="true" autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}">
+                <f:facet name="header">
+                    <h2 align="center">Develop the Positive Psychology</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <iframe frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}" class="video-image" width="100%"
+                                style="text-align: center;">
+                        </iframe>
+                    </div>
+                </div>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{PodcastController.podcast3}" var="podcast" numVisible="3" numScroll="3"
+                        circular="true" autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}">
+                <f:facet name="header">
+                    <h2 align="center">Self Love</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <iframe frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}" class="video-image" width="90%"
+                                style="text-align: center;">
+                        </iframe>
+                    </div>
+                </div>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{PodcastController.podcast4}" var="podcast" numVisible="3" numScroll="3"
+                        circular="true" autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}">
+                <f:facet name="header">
+                    <h2 align="center">Calmer You</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <iframe frameborder="0"
+                                src="https://embed.radiopublic.com/e?if=#{podcast.src}" class="video-image" width="80%"
+                                style="text-align: center;">
+                        </iframe>
+                    </div>
+                </div>
+            </p:carousel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

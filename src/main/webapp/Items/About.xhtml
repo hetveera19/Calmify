@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="About Us" />
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <h:form id="form">
+            <div align="center">
+            <h2>About Us Page</h2>
+            <p align="justify" style="margin-left: 10%; margin-right: 10%;">In recent years and specifically during the Covid’19 period, poor mental health has been the most pervasive. Bad mental health can affect every aspect of life. High levels of anxiety and depression are being reported which are even worsened by the isolation and loneliness during the pandemic. Moreover with increasing use of social media, mood disorders and sucide related outcomes have increased significantly. In September 2020, the rate of moderate to severe anxiety peaked with over 8 in 10 people who took an anxiety screen scoring moderate to severe symptoms.</p>
+                <br></br>
+                <p><strong>According to <a href="https://www.mhanational.org/research-reports/2021-state-mental-health-america" target="_blank">
+                    2021 State of Mental Health In America: </a> </strong>
+                </p>
+                <p align="center"><strong>
+                    9.7% of youth in the U.S. have severe major depression compared to 9.2% last year.</strong>
+                </p>
+                <p align="center"><strong> Suicidal ideation among adults is increasing.</strong>
+        </p>
+                <p align="center"><strong> Globally, 1 in 5 people suffer from mental illness.</strong>
+</p>
+                <p align="center"><strong> Number of US Adults with Anxiety Disorders: 42.5 million</strong>
+        </p>
+                <p align="center"><strong>Number of US Adults with Depression: 17.3 million</strong>
+        </p>
+                <p align="center"><strong> Rate of depression in young adults increased by more than 50% in last 12 years</strong>
+                </p>
+                <br></br>
+                <i class="fas fa-hands-helping" style="font-size: xx-large"></i>
+
+                <h3>But we are here to help</h3>
+                <p>With our well-curated WebApp, we plan to bring a positive outlook to your life. </p>
+                   <p> Subscribe and get our daily motivations to begin your day with. </p>
+                <p> Access various Podcasts and Videos on our WebApp </p>
+                <p> Shop items to improve your well-being </p>
+                <p> Join the Calmify Community, build with other users to support each other. </p>
+            </div>
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

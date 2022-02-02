@@ -10,42 +10,86 @@
 
         I am hereby writing my name as my signature to declare that the above statements are true:
 
-        Anubhav Nanda
+        Anshika Tyagi Anubhav Nanda Het Veera
 
         **********************************************************
         */
 -->
+
 <!--
-  - Created by Anubhav Nanda on 2021.9.12
-  - Copyright © 2021 Anubhav Nanda. All rights reserved.
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
   -->
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <!-- This page is constructed based on the siteTemplate -->
-    <ui:composition template="/template/siteTemplate.xhtml">
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
 
-        <!-- Create the content for this page below -->
-        <ui:define name="editableContent">
-            <div align="center">
-                <!-- 
-                ========================================
-                *   PrimeFaces Galleria Image Slider   *
-                ========================================
-                Various effect options for transitions: blind, bounce, clip, drop, explode, fade,
-                fold, highlight, puff, pulsate, scale, shake, size, slide, and transfer.
-                -->
-                <p:galleria value="#{sliderController.listOfSliderImageFilenames}"
-                            var="imageFilename" effect="fade" effectSpeed="1000" showFilmstrip="true"
-                            panelWidth="500" panelHeight="330" showCaption="true">
-                    <p:graphicImage value="/resources/images/slider/#{imageFilename}"
-                                    alt="#{sliderController.description(imageFilename)}" title="" />
-                </p:galleria>
-                <br/><br/>
-                <h1>We sell pre-owned Cars!</h1>
-            </div>
-        </ui:define>
-    </ui:composition>
+    <!-- CSS style definitions for p:galleria to use -->
+    <style type="text/css">
+        body .custom-indicator-galleria .ui-galleria-indicators {
+            padding: 1rem .25rem 1rem 0;
+        }
+
+        body .custom-indicator-galleria .ui-galleria-indicator {
+            width: 100%;
+            text-align: right;
+            font-weight: bold;
+            padding: .357rem .75rem .357rem .75rem;
+            margin-bottom: 0 !important;
+        }
+
+        body .custom-indicator-galleria .ui-galleria-indicator {
+            color: #e9ecef;
+            background-color: transparent;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        body .custom-indicator-galleria .ui-galleria-indicator.ui-state-highlight {
+            background-color: var(--primary-color);
+            color: var(--primary-color-text);
+        }
+    </style>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <blockquote><h:outputText value="#{quoteController.getQuote()}"/></blockquote>
+        <div class="card" align="center">
+            <!--
+            ========================================
+            |   PrimeFaces Galleria Image Slider   |
+            ========================================
+            (1) value="#{galleriaManager.listOfPhotos}" obtains a list of photo object references.
+            (2) var="aPhoto" is the iterator variable holding a photo object reference from the list.
+            (3) responsiveOptions defines a model of options for Responsive UI Design.
+                It enables the slider to resize to fit on a smartphone screen.
+            (4) circular="true" loops the slide show until it is stopped.
+            (5) autoPlay="true" automatically starts the slide show.
+            (6) If the user clicks an indicator button, the slider becomes manual until
+                the page is refreshed to be auto play again.
+            (7) transitionInterval="4000" displays next photo after 4 seconds (4000 milliseconds).
+            (8) showIndicators="true" displays the indicator buttons below each photo.
+                Clicking an indicator button shows its corresponding photo.
+            (9) Change max-width to be the maximum width of the photos used.
+            -->
+            <p:galleria value="#{galleriaManager.listOfPhotos}" var="aPhoto"
+                        responsiveOptions="#{galleriaManager.responsiveOptions1}"
+                        circular="true" autoPlay="true" transitionInterval="4000"
+                        showThumbnails="false" showIndicators="true" style="max-width: 800px">
+
+                <p:graphicImage value="#{aPhoto.regularPhotoFilepath}" alt="#{aPhoto.title}" style="width: 100%; display: block;" />
+            </p:galleria>
+        </div>
+    </ui:define>
+</ui:composition>
 </html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="My Orders" />
+    </ui:define>
+
+    <style type="text/css">
+        .logo {
+            width: 5%
+        }
+
+        .detail {
+            width: 95%;
+            padding-left: 25px;
+        }
+
+        .detail td {
+            font-size: 24px;
+        }
+
+        .product-list-item{
+            border: 1px;
+        }
+    </style>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <p:card rendered="${userController.isLoggedIn() == true}">
+            <h1 style="text-align: center;font-style: italic;margin-bottom: 10px">Your Orders</h1>
+            <p:dataViewGridItem columns="2">
+                <div style="width: 80%; margin-left: 10%">
+                    <p:accordionPanel value="#{ordersController.listOfOrders}" var="orders">
+                        <p:tab title="Order placed on #{orders.orderDate} ">
+                            <div>
+                                <h1> <h:outputText value="Total Price : $ #{orders.totalPrice}" styleClass="product-price">
+                                        <f:convertNumber currencySymbol="$" type="currency" maxFractionDigits="2"/>
+                                    </h:outputText>
+                                </h1>
+                            </div>
+                            <div class="product-list-item">
+                                <p:repeat value="#{ordersController.getListOfItemsForGivenOrder(orders)}" var="itemdetails">
+                                    <p:panel style="text-align:left" >
+                                        <h:panelGrid columns="2" style="width:80%; margin-left: 10%;"
+                                                     columnClasses="columnBlogImage, columnMiddlePart ">
+                                            <p:graphicImage url="#{itemdetails.imageUrl}" width="150px" style="float:left" />
+                                            <h:panelGrid style="width:100%; margin-left:10px">
+                                                <h:outputText value="#{itemdetails.name}" />
+                                                <h:outputText value="#{itemdetails.price}" >
+                                                    <f:convertNumber currencySymbol="$" type="currency" maxFractionDigits="2" />
+                                                </h:outputText>
+                                                <h:outputText value="Quantity : #{itemdetails.quantity}" />
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:repeat>
+                            </div>
+                        </p:tab>
+                    </p:accordionPanel>
+                </div>
+            </p:dataViewGridItem>
+        </p:card>>
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  ~ Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  ~
+  -->
+
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd"
+       bean-discovery-mode="all">
+</beans>

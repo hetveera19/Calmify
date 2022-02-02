@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<!-- This page is constructed based on the siteTemplate -->
+<ui:composition template="/template/siteTemplate.xhtml">
+
+    <ui:define name="title">
+        <!-- Set the page title -->
+        <h:outputText value="Improve Focus"/>
+    </ui:define>
+
+    <!-- Create the content for this page below -->
+    <ui:define name="editableContent">
+        <h:form id="form">
+            <p:carousel value="#{youTubeAPIController.getVideo(1)}" var="avideo" circular="true"
+                        autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
+                    <h2 align="center">Talks that can change your life</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg"
+                                        styleClass="video-image" width="70%"
+                                        style="text-align: center;"/>
+                        <br></br>
+                        <div align="center">
+                            <p:commandButton id="playButton1" value="Play" icon="fas fa-play"
+                                             styleClass="rounded-button"
+                                             actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
+                        </div>
+                    </div>
+                </div>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{youTubeAPIController.getVideo(2)}" var="avideo" circular="true"
+                        autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
+                    <h2 align="center">Keep your Mind Relaxed and Calm</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg"
+                                        styleClass="video-image" width="70%"
+                                        style="text-align: center;"/>
+                        <br></br>
+                        <div align="center">
+                            <p:commandButton id="playButton2" value="Play" icon="fas fa-play"
+                                             styleClass="rounded-button"
+                                             actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
+                        </div>
+                    </div>
+                </div>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{youTubeAPIController.getVideo(3)}" var="avideo" circular="true"
+                        autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
+                    <h2 align="center">Nature as a Healer</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg"
+                                        styleClass="video-image" width="70%"
+                                        style="text-align: center;"/>
+                        <br></br>
+                        <div align="center">
+                            <p:commandButton id="playButton3" value="Play" icon="fas fa-play"
+                                             styleClass="rounded-button"
+                                             actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
+                        </div>
+                    </div>
+                </div>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{youTubeAPIController.getVideo(4)}" var="avideo" circular="true"
+                        autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
+                    <h2 align="center">Be your own Life Coach</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg"
+                                        styleClass="video-image" width="70%"
+                                        style="text-align: center;"/>
+                        <br></br>
+                        <div align="center">
+                            <p:commandButton id="playButton4" value="Play" icon="fas fa-play"
+                                             styleClass="rounded-button"
+                                             actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
+                        </div>
+                    </div>
+                </div>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{youTubeAPIController.getVideo(5)}" var="avideo" circular="true"
+                        autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
+                    <h2 align="center">Oddly Satisfying trends for your Dopamine</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg"
+                                        styleClass="video-image" width="70%"
+                                        style="text-align: center;"/>
+                        <br></br>
+                        <div align="center">
+                            <p:commandButton id="playButton5" value="Play" icon="fas fa-play"
+                                             styleClass="rounded-button"
+                                             actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
+                        </div>
+                    </div>
+                </div>
+            </p:carousel>
+            <br></br>
+            <br></br>
+            <p:carousel value="#{youTubeAPIController.getVideo(6)}" var="avideo" circular="true"
+                        autoplayInterval="20000" effect="easeInStrong"
+                        responsiveOptions="#{PodcastController.responsiveOptions}" numVisible="3" numScroll="3">
+                <f:facet name="header">
+                    <h2 align="center">Feel the Positive Energy</h2>
+                </f:facet>
+                <div class="video-item">
+                    <div class="video-item-content">
+                        <h:graphicImage value="https://i1.ytimg.com/vi/#{avideo.src}/hqdefault.jpg"
+                                        styleClass="video-image" width="70%"
+                                        style="text-align: center;"/>
+                        <br></br>
+                        <div align="center">
+                            <p:commandButton id="playButton6" value="Play" icon="fas fa-play"
+                                             styleClass="rounded-button"
+                                             actionListener="#{youTubeAPIController.setIdOfVideoToPlay(avideo.src)}"
+                                             update=":VideoPlayForm"
+                                             oncomplete="PF('VideoPlayDialog').show()"/>
+                        </div>
+                    </div>
+                </div>
+            </p:carousel>
+
+        </h:form>
+        <ui:include src="/videoPlayer/YouTubeVideoPlayer.xhtml"/>
+    </ui:define>
+</ui:composition>
+<!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

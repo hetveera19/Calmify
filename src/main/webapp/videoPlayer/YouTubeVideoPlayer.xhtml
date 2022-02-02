@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  - Created by Anshika Tyagi, Anubhav Nanda and Het Veera on 2021.12.8
+  - Copyright © 2021 Anshika Tyagi, Anubhav Nanda and Het Veera. All rights reserved.
+  -
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <!--
+    =======================================================
+    Dialog Showing YouTube Player to Play the Video with ID
+    =======================================================
+    -->
+    <p:dialog position="center center" id="VideoPlayDlg" widgetVar="VideoPlayDialog"
+              modal="true" resizable="true" appendTo="@(body)" header="Video Player" height="60%"
+              width="70%" >
+
+        <h:form id="VideoPlayForm">
+
+            <div align="center">
+                <br />
+                <div class="responsive-container">
+                    <iframe class="responsive-iframe"
+                            src="https://www.youtube.com/embed/#{youTubeAPIController.idOfVideoToPlay}">
+                    </iframe>
+                </div>
+                <br />
+                <!-- CLOSE button -->
+                <p:commandButton value="Close" icon="fas fa-window-close" styleClass="button"
+                                 onclick="PF('VideoPlayDialog').hide()" />
+            </div>
+        </h:form>
+    </p:dialog>
+</ui:composition>
+</html>
+
+
+
+
+
+
